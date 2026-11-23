@@ -1,0 +1,300 @@
+
+/* =========================
+   GENERAL
+========================= */
+
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f5f7fb;
+    color: #212529;
+}
+
+/* =========================
+   NAVBAR
+========================= */
+
+.bookstore-navbar {
+    background: #131921;
+    padding: 12px 0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.bookstore-navbar .navbar-brand {
+    color: white;
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.bookstore-navbar .nav-link {
+    color: #ffffff !important;
+    margin-left: 10px;
+    font-weight: 500;
+}
+
+.bookstore-navbar .nav-link:hover {
+    color: #ffca28 !important;
+}
+
+/* =========================
+   HERO SECTION
+========================= */
+
+.hero-section {
+    background: linear-gradient(135deg, #fff3e0, #ffe0b2);
+    padding: 70px 0;
+    margin-bottom: 40px;
+}
+
+.hero-title {
+    font-size: 48px;
+    font-weight: 700;
+    color: #172337;
+}
+
+.hero-text {
+    font-size: 19px;
+    color: #555;
+    margin: 20px 0;
+}
+
+.hero-btn {
+    background: #ff6f00;
+    color: white;
+    border: none;
+    padding: 12px 28px;
+    border-radius: 8px;
+    font-weight: bold;
+}
+
+.hero-btn:hover {
+    background: #e65100;
+    color: white;
+}
+
+/* =========================
+   SEARCH BAR
+========================= */
+
+.search-box {
+    max-width: 650px;
+    margin: 25px auto 40px;
+}
+
+.search-box input {
+    height: 50px;
+    border-radius: 8px 0 0 8px;
+    border: 1px solid #ddd;
+}
+
+.search-box button {
+    background: #ffca28;
+    border: none;
+    padding: 0 25px;
+    font-weight: bold;
+    border-radius: 0 8px 8px 0;
+}
+
+/* =========================
+   SECTION TITLE
+========================= */
+
+.section-title {
+    font-size: 30px;
+    font-weight: bold;
+    margin-bottom: 30px;
+    color: #172337;
+}
+
+/* =========================
+   BOOK CARD
+========================= */
+
+.book-card {
+    background: white;
+    border: none;
+    border-radius: 12px;
+    overflow: hidden;
+    height: 100%;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.10);
+    transition: 0.3s;
+}
+
+.book-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.16);
+}
+
+.book-image {
+    width: 100%;
+    height: 280px;
+    object-fit: cover;
+    background: #eee;
+}
+
+.book-body {
+    padding: 20px;
+}
+
+.book-name {
+    font-size: 20px;
+    font-weight: bold;
+    color: #172337;
+}
+
+.book-author {
+    color: #777;
+    margin-bottom: 10px;
+}
+
+.book-description {
+    color: #666;
+    font-size: 14px;
+    min-height: 42px;
+}
+
+.book-price {
+    color: #e65100;
+    font-size: 24px;
+    font-weight: bold;
+    margin: 12px 0;
+}
+
+/* =========================
+   BUTTONS
+========================= */
+
+.btn-order {
+    background: #ff6f00;
+    color: white;
+    border: none;
+    font-weight: bold;
+}
+
+.btn-order:hover {
+    background: #e65100;
+    color: white;
+}
+
+.btn-like {
+    border: 1px solid #dc3545;
+    color: #dc3545;
+    font-weight: bold;
+}
+
+.btn-like:hover {
+    background: #dc3545;
+    color: white;
+}
+
+/* =========================
+   BADGE
+========================= */
+
+.book-badge {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    background: #28a745;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+/* =========================
+   FOOTER
+========================= */
+
+.bookstore-footer {
+    background: #131921;
+    color: white;
+    padding: 35px 0;
+    margin-top: 70px;
+}
+
+.bookstore-footer h5 {
+    font-weight: bold;
+}
+
+.bookstore-footer p {
+    color: #cccccc;
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 768px) {
+
+    .hero-title {
+        font-size: 34px;
+    }
+
+    .hero-section {
+        padding: 45px 20px;
+    }
+
+    .book-image {
+        height: 250px;
+    }
+
+    .section-title {
+        font-size: 25px;
+    }
+}
+
+
+/* =========================
+   ADMIN NAVBAR
+========================= */
+.admin-navbar {
+    background: #131921;
+    padding: 14px 0;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    width: 100%;
+}
+
+.admin-brand {
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.admin-brand:hover {
+    color: #ffc107;
+}
+
+.admin-user {
+    color: #ffc107;
+    font-weight: 600;
+}
+
+.admin-nav-link {
+    color: white;
+    text-decoration: none;
+    margin-left: 20px;
+    font-weight: 500;
+    transition: 0.3s;
+}
+
+.admin-nav-link:hover,
+.admin-nav-link.active {
+    color: #ffc107;
+}
+
+@media (max-width: 768px) {
+    .admin-brand {
+        font-size: 20px;
+    }
+    .admin-nav-link {
+        margin-left: 8px;
+        font-size: 14px;
+    }
+    .admin-user {
+        display: none;
+    }
+}

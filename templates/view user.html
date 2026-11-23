@@ -1,0 +1,810 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>BookStore - View Users</title>
+
+
+    <!-- BOOTSTRAP -->
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet">
+
+
+    <!-- EXTERNAL CSS -->
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}">
+
+
+    <style>
+
+        /* =========================
+           BODY
+        ========================= */
+
+        body {
+            background: #f4f6f9;
+            font-family: Arial, sans-serif;
+            margin: 0;
+        }
+
+
+        /* =========================
+           NAVBAR
+        ========================= */
+
+        .admin-user {
+            color: #ffc107;
+            font-weight: 600;
+        }
+
+        .admin-navbar {
+            background: #131921;
+            padding: 14px 0;
+
+            box-shadow:
+                0 2px 8px rgba(0,0,0,0.15);
+        }
+
+        .admin-brand {
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        .admin-brand:hover {
+            color: #ffc107;
+        }
+
+        .admin-nav-link {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+            font-weight: 500;
+        }
+
+        .admin-nav-link:hover {
+            color: #ffc107;
+        }
+
+
+        /* =========================
+           PAGE
+        ========================= */
+
+        .page-section {
+            padding: 45px 0 70px;
+        }
+
+        .page-title {
+            font-size: 32px;
+            font-weight: 700;
+            color: #172337;
+        }
+
+        .page-subtitle {
+            color: #777;
+            margin-bottom: 25px;
+        }
+
+
+        /* =========================
+           SEARCH AREA
+        ========================= */
+
+        .search-box {
+            background: white;
+            padding: 20px;
+
+            border-radius: 15px;
+
+            box-shadow:
+                0 4px 15px rgba(0,0,0,0.07);
+
+            margin-bottom: 25px;
+        }
+
+        .search-input {
+            height: 48px;
+            border-radius: 8px;
+
+            border: 1px solid #ddd;
+
+            padding: 10px 15px;
+
+            font-size: 16px;
+        }
+
+        .search-input:focus {
+            border-color: #ff6f00;
+
+            box-shadow:
+                0 0 0 0.2rem rgba(255,111,0,0.12);
+        }
+
+
+        /* =========================
+           USER COUNT
+        ========================= */
+
+        .user-count-box {
+            background: #131921;
+
+            color: white;
+
+            border-radius: 12px;
+
+            padding: 12px 20px;
+
+            display: inline-block;
+
+            font-weight: bold;
+
+            margin-bottom: 25px;
+        }
+
+        .user-count-number {
+            color: #ffc107;
+            font-size: 22px;
+        }
+
+
+        /* =========================
+           USER CARD
+        ========================= */
+
+        .user-card {
+            background: white;
+
+            border: none;
+
+            border-radius: 16px;
+
+            padding: 25px;
+
+            height: 100%;
+
+            box-shadow:
+                0 4px 18px rgba(0,0,0,0.08);
+
+            transition: 0.3s;
+
+            display: flex;
+            flex-direction: column;
+        }
+
+        .user-card:hover {
+            transform: translateY(-5px);
+
+            box-shadow:
+                0 9px 25px rgba(0,0,0,0.13);
+        }
+
+
+        /* =========================
+           USER ICON
+        ========================= */
+
+        .user-icon {
+            width: 65px;
+            height: 65px;
+
+            border-radius: 50%;
+
+            background: #fff3e0;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 30px;
+
+            margin-bottom: 18px;
+        }
+
+
+        /* =========================
+           USERNAME
+        ========================= */
+
+        .username {
+            font-size: 22px;
+
+            font-weight: bold;
+
+            color: #172337;
+        }
+
+
+        /* =========================
+           USER INFO
+        ========================= */
+
+        .user-info {
+            color: #555;
+
+            margin-top: 12px;
+        }
+
+        .user-info div {
+            margin-bottom: 10px;
+        }
+
+        .info-label {
+            font-weight: bold;
+
+            color: #333;
+        }
+
+
+        /* =========================
+           USER ID
+        ========================= */
+
+        .user-id {
+            display: inline-block;
+
+            background: #e9ecef;
+
+            color: #555;
+
+            padding: 4px 10px;
+
+            border-radius: 20px;
+
+            font-size: 13px;
+
+            margin-bottom: 10px;
+        }
+
+
+        /* =========================
+           GENDER
+        ========================= */
+
+        .gender-badge {
+            display: inline-block;
+
+            background: #e7f1ff;
+
+            color: #0d6efd;
+
+            padding: 5px 12px;
+
+            border-radius: 20px;
+
+            font-size: 13px;
+
+            font-weight: 600;
+        }
+
+
+        /* =========================
+           EMPTY
+        ========================= */
+
+        .empty-box {
+            background: white;
+
+            border-radius: 16px;
+
+            padding: 60px 20px;
+
+            text-align: center;
+
+            box-shadow:
+                0 4px 15px rgba(0,0,0,0.06);
+        }
+
+
+        /* =========================
+           NO SEARCH RESULT
+        ========================= */
+
+        .no-result {
+            display: none;
+
+            background: white;
+
+            border-radius: 16px;
+
+            padding: 50px 20px;
+
+            text-align: center;
+
+            color: #777;
+
+            box-shadow:
+                0 4px 15px rgba(0,0,0,0.06);
+        }
+
+
+        /* =========================
+           FOOTER
+        ========================= */
+
+        .footer {
+            background: #131921;
+
+            color: white;
+
+            padding: 28px;
+
+            text-align: center;
+
+            margin-top: 40px;
+        }
+
+        .footer p {
+            margin: 0;
+
+            color: #aaa;
+        }
+
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 768px) {
+
+            .page-title {
+                font-size: 27px;
+            }
+
+            .admin-nav-link {
+                margin-left: 8px;
+
+                font-size: 14px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================
+     NAVBAR
+========================= -->
+
+<!-- =========================
+     ADMIN NAVBAR
+========================= -->
+<nav class="admin-navbar">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center flex-wrap">
+            <!-- LOGO -->
+            <a href="/admin" class="admin-brand">
+                📚 BookStore Admin
+            </a>
+
+            <!-- NAVBAR LINKS -->
+            <div class="d-flex align-items-center flex-wrap">
+                <span class="admin-user me-3">
+                    👤 Admin
+                </span>
+                <a href="/admin" class="admin-nav-link">
+                    Dashboard
+                </a>
+                <a href="/viewproducts" class="admin-nav-link">
+                    Products
+                </a>
+                <a href="/admin/orders" class="admin-nav-link">
+                    Orders
+                </a>
+                <a href="/viewusers" class="admin-nav-link">
+                    Users
+                </a>
+                <a href="/addbook" class="admin-nav-link">
+                    Add Books
+                </a>
+                <a href="/logout" class="admin-nav-link">
+                    Logout
+                </a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+
+
+<!-- =========================
+     MAIN
+========================= -->
+
+<div class="container page-section">
+
+
+    <!-- PAGE TITLE -->
+
+    <h1 class="page-title">
+
+        👥 Registered Users
+
+    </h1>
+
+
+    <p class="page-subtitle">
+
+        View all registered customers in your BookStore.
+
+    </p>
+
+
+
+    {% if users %}
+
+
+    <!-- =========================
+         SEARCH BAR
+    ========================= -->
+
+    <div class="search-box">
+
+        <label
+            for="userSearch"
+            class="form-label fw-bold">
+
+            🔍 Search Users
+
+        </label>
+
+
+        <input
+            type="text"
+            id="userSearch"
+            class="form-control search-input"
+            placeholder="Search by username, mobile or email...">
+
+    </div>
+
+
+
+    <!-- =========================
+         USER COUNT
+    ========================= -->
+
+    <div class="user-count-box">
+
+        👥 Users Found:
+
+        <span
+            id="userCount"
+            class="user-count-number">
+
+            {{ users|length }}
+
+        </span>
+
+    </div>
+
+
+
+    <!-- =========================
+         USER CARDS
+    ========================= -->
+
+    <div
+        class="row g-4"
+        id="userContainer">
+
+
+        {% for i in users %}
+
+
+        <div
+            class="col-lg-4 col-md-6 user-item">
+
+
+            <div
+                class="user-card">
+
+
+                <!-- USER ICON -->
+
+                <div class="user-icon">
+
+                    👤
+
+                </div>
+
+
+
+                <!-- USER ID -->
+
+                <span class="user-id">
+
+                    User ID: {{ i.id }}
+
+                </span>
+
+
+
+                <!-- USERNAME -->
+
+                <div class="username">
+
+                    {{ i.username }}
+
+                </div>
+
+
+
+                <!-- GENDER -->
+
+                <div class="mt-2">
+
+                    <span class="gender-badge">
+
+                        {{ i.gender }}
+
+                    </span>
+
+                </div>
+
+
+
+                <hr>
+
+
+
+                <!-- USER DETAILS -->
+
+                <div class="user-info">
+
+
+                    <!-- MOBILE -->
+
+                    <div>
+
+                        📱
+
+                        <span class="info-label">
+
+                            Mobile:
+
+                        </span>
+
+                        {{ i.mobile_number }}
+
+                    </div>
+
+
+
+                    <!-- EMAIL -->
+
+                    <div>
+
+                        📧
+
+                        <span class="info-label">
+
+                            Email:
+
+                        </span>
+
+                        {{ i.email }}
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+
+        {% endfor %}
+
+
+    </div>
+
+
+
+    <!-- =========================
+         NO SEARCH RESULT
+    ========================= -->
+
+    <div
+        id="noResult"
+        class="no-result mt-4">
+
+
+        <div style="font-size:60px;">
+
+            🔍
+
+        </div>
+
+
+        <h4 class="mt-3">
+
+            No Users Found
+
+        </h4>
+
+
+        <p>
+
+            Try another username, mobile number or email.
+
+        </p>
+
+
+    </div>
+
+
+
+    {% else %}
+
+
+    <!-- =========================
+         NO USERS IN DATABASE
+    ========================= -->
+
+    <div class="empty-box">
+
+
+        <div style="font-size:65px;">
+
+            👥
+
+        </div>
+
+
+        <h3 class="mt-3">
+
+            No Users Found
+
+        </h3>
+
+
+        <p class="text-muted">
+
+            No customers have registered yet.
+
+        </p>
+
+
+    </div>
+
+
+    {% endif %}
+
+
+</div>
+
+
+
+<!-- =========================
+     FOOTER
+========================= -->
+
+<footer class="footer">
+
+    <p>
+
+        📚 BookStore Admin Panel © 2026
+
+    </p>
+
+</footer>
+
+
+
+<!-- =========================
+     SEARCH JAVASCRIPT
+========================= -->
+
+<script>
+
+const searchInput =
+    document.getElementById("userSearch");
+
+const userItems =
+    document.querySelectorAll(".user-item");
+
+const userCount =
+    document.getElementById("userCount");
+
+const noResult =
+    document.getElementById("noResult");
+
+
+if (searchInput) {
+
+    searchInput.addEventListener("input", function() {
+
+
+        /* Get search text */
+
+        let searchText =
+            this.value.toLowerCase().trim();
+
+
+        /* Start count */
+
+        let count = 0;
+
+
+        /* Check every user */
+
+        userItems.forEach(function(item) {
+
+
+            let userText =
+                item.innerText.toLowerCase();
+
+
+            /* User found */
+
+            if (userText.includes(searchText)) {
+
+                item.style.display = "";
+
+                count++;
+
+            }
+
+            /* User not found */
+
+            else {
+
+                item.style.display = "none";
+
+            }
+
+        });
+
+
+        /* Update user count */
+
+        userCount.innerText = count;
+
+
+        /* Show no result */
+
+        if (count === 0) {
+
+            noResult.style.display = "block";
+
+        }
+
+        else {
+
+            noResult.style.display = "none";
+
+        }
+
+    });
+
+}
+
+</script>
+
+
+</body>
+
+</html>
+

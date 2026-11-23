@@ -1,0 +1,2001 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>BookStore - Place Order</title>
+
+<!-- Bootstrap -->
+<link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+    rel="stylesheet">
+
+<!-- Google Font -->
+<link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet">
+
+
+<style>
+
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        margin: 0;
+        font-family: 'Poppins', sans-serif;
+        background: #eefaff;
+        color: #111;
+    }
+
+
+    /* ================= NAVBAR ================= */
+
+    .bookstore-navbar {
+        background: #000;
+        padding: 13px 0;
+        box-shadow: 0 3px 15px rgba(0,0,0,.25);
+    }
+
+    .navbar-brand {
+        color: white !important;
+        font-size: 25px;
+        font-weight: 800;
+    }
+
+    .navbar-brand span {
+        color: #ffb6d2;
+    }
+
+    .nav-link {
+        color: white !important;
+        font-weight: 600;
+        margin-left: 7px;
+        padding: 9px 15px !important;
+        border-radius: 8px;
+        transition: .3s;
+    }
+
+    .nav-link:hover,
+    .nav-link.active {
+        background: #ffb6d2;
+        color: #000 !important;
+    }
+
+    .navbar-toggler {
+        border: 1px solid #ffb6d2;
+    }
+
+    .navbar-toggler-icon {
+        filter: invert(1);
+    }
+
+
+    /* ================= SKY BACKGROUND ================= */
+
+    .sky-background {
+        position: relative;
+        overflow: hidden;
+
+        background: linear-gradient(
+            to bottom,
+            #73cfff,
+            #a9e3ff,
+            #dff6ff,
+            #f7fdff
+        );
+    }
+
+    .sky-area {
+        position: relative;
+        overflow: hidden;
+    }
+
+
+    /* ================= SUN ================= */
+
+    .sun {
+        position: absolute;
+
+        width: 90px;
+        height: 90px;
+
+        right: 7%;
+        top: 45px;
+
+        border-radius: 50%;
+
+        background: radial-gradient(
+            circle,
+            #fff59d 0%,
+            #ffd54f 45%,
+            #ffb300 100%
+        );
+
+        box-shadow:
+            0 0 30px #fff59d,
+            0 0 70px rgba(255,193,7,.7);
+
+        z-index: 1;
+    }
+
+
+    /* ================= CLOUDS ================= */
+
+    .cloud {
+        position: absolute;
+
+        font-size: 75px;
+
+        opacity: .8;
+
+        z-index: 1;
+
+        animation: cloudMove 18s linear infinite;
+    }
+
+    .cloud-1 {
+        top: 40px;
+        left: 5%;
+    }
+
+    .cloud-2 {
+        top: 120px;
+        right: 20%;
+        font-size: 60px;
+        animation-duration: 22s;
+    }
+
+    .cloud-3 {
+        top: 210px;
+        left: 35%;
+        font-size: 55px;
+        animation-duration: 25s;
+    }
+
+    .cloud-4 {
+        top: 300px;
+        right: 5%;
+        font-size: 70px;
+        animation-duration: 20s;
+    }
+
+    @keyframes cloudMove {
+
+        0% {
+            transform: translateX(0);
+        }
+
+        50% {
+            transform: translateX(35px);
+        }
+
+        100% {
+            transform: translateX(0);
+        }
+
+    }
+
+
+    /* ================= BUTTERFLIES ================= */
+
+    .butterfly {
+        position: absolute;
+
+        font-size: 35px;
+
+        z-index: 2;
+
+        animation: butterflyMove 5s ease-in-out infinite;
+    }
+
+    .butterfly-1 {
+        left: 8%;
+        top: 100px;
+    }
+
+    .butterfly-2 {
+        left: 25%;
+        top: 180px;
+        font-size: 28px;
+    }
+
+    .butterfly-3 {
+        right: 30%;
+        top: 120px;
+        font-size: 30px;
+    }
+
+    .butterfly-4 {
+        right: 8%;
+        top: 220px;
+        font-size: 38px;
+    }
+
+    .butterfly-5 {
+        left: 15%;
+        top: 350px;
+        font-size: 27px;
+    }
+
+    .butterfly-6 {
+        left: 50%;
+        top: 280px;
+        font-size: 32px;
+    }
+
+    .butterfly-7 {
+        right: 20%;
+        top: 350px;
+        font-size: 26px;
+    }
+
+    .butterfly-8 {
+        left: 70%;
+        top: 200px;
+    }
+
+    .butterfly-9 {
+        left: 40%;
+        top: 100px;
+    }
+
+    .butterfly-10 {
+        right: 40%;
+        top: 380px;
+    }
+
+    @keyframes butterflyMove {
+
+        0% {
+            transform: translateY(0) rotate(-5deg);
+        }
+
+        50% {
+            transform: translateY(-20px) rotate(5deg);
+        }
+
+        100% {
+            transform: translateY(0) rotate(-5deg);
+        }
+
+    }
+
+
+    /* ================= FLOWERS ================= */
+
+    .flower {
+        position: absolute;
+
+        z-index: 2;
+
+        font-size: 30px;
+
+        animation: flowerMove 4s ease-in-out infinite;
+    }
+
+    .flower-1 {
+        left: 3%;
+        bottom: 30px;
+    }
+
+    .flower-2 {
+        left: 20%;
+        bottom: 70px;
+    }
+
+    .flower-3 {
+        left: 40%;
+        bottom: 25px;
+    }
+
+    .flower-4 {
+        right: 30%;
+        bottom: 60px;
+    }
+
+    .flower-5 {
+        right: 15%;
+        bottom: 30px;
+    }
+
+    .flower-6 {
+        right: 3%;
+        bottom: 75px;
+    }
+
+    @keyframes flowerMove {
+
+        0% {
+            transform: translateY(0);
+        }
+
+        50% {
+            transform: translateY(-8px);
+        }
+
+        100% {
+            transform: translateY(0);
+        }
+
+    }
+
+
+    /* ================= PAGE HEADER ================= */
+
+    .page-header {
+        position: relative;
+
+        z-index: 5;
+
+        text-align: center;
+
+        padding: 70px 20px 40px;
+    }
+
+    .page-header h1 {
+        font-size: 45px;
+
+        font-weight: 800;
+
+        color: #073b66;
+
+        margin-bottom: 10px;
+    }
+
+    .page-header h1 span {
+        color: #e75480;
+    }
+
+    .page-header p {
+        font-size: 16px;
+
+        color: #444;
+
+        margin: 0;
+    }
+
+
+    /* ================= MAIN CONTENT ================= */
+
+    .order-section {
+        position: relative;
+
+        z-index: 5;
+
+        padding: 25px 0 80px;
+
+        background: linear-gradient(
+            to bottom,
+            transparent,
+            #eefaff,
+            #ffffff
+        );
+    }
+
+
+    /* ================= CARD ================= */
+
+    .order-card {
+
+        background: white;
+
+        border: 1px solid #cfe9f3;
+
+        border-radius: 18px;
+
+        padding: 25px;
+
+        margin-bottom: 25px;
+
+        box-shadow:
+            0 8px 25px rgba(0,0,0,.08);
+    }
+
+    .order-title {
+
+        color: #073b66;
+
+        font-size: 24px;
+
+        font-weight: 800;
+
+        margin-bottom: 20px;
+    }
+
+
+    /* ================= ADDRESS ================= */
+
+    .address-card {
+
+        background: #fff;
+
+        border: 1px solid #cfe9f3;
+
+        border-radius: 12px;
+
+        padding: 15px;
+
+        margin-bottom: 12px;
+
+        cursor: pointer;
+
+        transition: .3s;
+    }
+
+    .address-card:hover {
+
+        transform: translateY(-2px);
+
+        box-shadow:
+            0 6px 18px rgba(0,0,0,.10);
+
+        border-color: #ffb6d2;
+    }
+
+    .address-card.selected {
+
+        border: 2px solid #e75480;
+
+        background: #fff7fa;
+
+        box-shadow:
+            0 5px 18px rgba(231,84,128,.12);
+    }
+
+    .address-type {
+
+        display: inline-block;
+
+        background: #ffb6d2;
+
+        color: #000;
+
+        font-size: 11px;
+
+        font-weight: 700;
+
+        padding: 4px 10px;
+
+        border-radius: 20px;
+
+        margin-bottom: 7px;
+
+        text-transform: uppercase;
+    }
+
+    .address-name {
+
+        font-size: 16px;
+
+        font-weight: 700;
+
+        color: #111;
+
+        margin-bottom: 3px;
+    }
+
+    .address-text {
+
+        color: #666;
+
+        font-size: 13px;
+
+        line-height: 1.6;
+    }
+
+    .address-actions {
+
+        margin-top: 10px;
+    }
+
+    .address-actions .btn {
+
+        font-size: 12px;
+
+        border-radius: 7px;
+
+        padding: 5px 10px;
+    }
+
+    .add-address {
+
+        display: block;
+
+        width: 100%;
+
+        border: 2px dashed #ffb6d2;
+
+        background: #fff8fb;
+
+        color: #e75480;
+
+        text-decoration: none;
+
+        text-align: center;
+
+        padding: 12px;
+
+        border-radius: 10px;
+
+        font-weight: 700;
+
+        transition: .3s;
+    }
+
+    .add-address:hover {
+
+        background: #ffb6d2;
+
+        color: #000;
+    }
+
+
+    /* ================= BOOK IMAGE ================= */
+
+    .book-image {
+
+        width: 190px;
+
+        height: 270px;
+
+        object-fit: cover;
+
+        border-radius: 12px;
+
+        box-shadow:
+            0 8px 20px rgba(0,0,0,.15);
+    }
+
+
+    /* ================= BOOK DETAILS ================= */
+
+    .book-name {
+
+        font-size: 28px;
+
+        font-weight: 800;
+
+        color: #073b66;
+
+        line-height: 1.3;
+
+        margin-bottom: 8px;
+
+        word-break: break-word;
+    }
+
+    .book-author {
+
+        color: #777;
+
+        font-size: 14px;
+
+        margin-bottom: 15px;
+    }
+
+    .book-description {
+
+        color: #666;
+
+        font-size: 14px;
+
+        line-height: 1.7;
+
+        margin-bottom: 15px;
+    }
+
+
+    /* ================= PRICE ================= */
+
+    .old-price {
+
+        color: #999;
+
+        text-decoration: line-through;
+
+        font-size: 15px;
+    }
+
+    .discount {
+
+        color: #198754;
+
+        font-size: 13px;
+
+        font-weight: 700;
+
+        margin-left: 8px;
+
+        background: #e9f8ef;
+
+        padding: 5px 8px;
+
+        border-radius: 6px;
+    }
+
+    .final-price {
+
+        color: #e75480;
+
+        font-size: 30px;
+
+        font-weight: 800;
+
+        margin-top: 7px;
+    }
+
+
+    /* ================= QUANTITY ================= */
+
+    .quantity-box {
+
+        display: flex;
+
+        align-items: center;
+
+        gap: 10px;
+
+        margin-top: 20px;
+    }
+
+    .quantity-box button {
+
+        width: 40px;
+
+        height: 40px;
+
+        border: none;
+
+        border-radius: 8px;
+
+        background: #000;
+
+        color: white;
+
+        font-size: 21px;
+
+        font-weight: 600;
+    }
+
+    .quantity-box button:hover {
+
+        background: #ffb6d2;
+
+        color: #000;
+    }
+
+    .quantity-box input {
+
+        width: 60px;
+
+        height: 40px;
+
+        text-align: center;
+
+        border: 1px solid #cfe9f3;
+
+        border-radius: 8px;
+
+        font-weight: 700;
+    }
+
+
+    /* ================= SUMMARY ================= */
+
+    .summary-box {
+
+        background: #f7fcff;
+
+        border: 1px solid #cfe9f3;
+
+        border-radius: 12px;
+
+        padding: 20px;
+    }
+
+    .summary-row {
+
+        display: flex;
+
+        justify-content: space-between;
+
+        margin-bottom: 13px;
+
+        font-size: 14px;
+    }
+
+    .total-row {
+
+        border-top: 2px solid #cfe9f3;
+
+        padding-top: 15px;
+
+        margin-top: 15px;
+
+        font-size: 20px;
+
+        font-weight: 800;
+
+        color: #073b66;
+    }
+
+
+    /* ================= PAYMENT ================= */
+
+    .payment-select {
+
+        height: 48px;
+
+        border: 1px solid #cfe9f3;
+
+        border-radius: 9px;
+
+        font-family: 'Poppins', sans-serif;
+    }
+
+    .payment-select:focus {
+
+        border-color: #ffb6d2;
+
+        box-shadow:
+            0 0 0 3px rgba(255,182,210,.25);
+    }
+
+    .place-order-btn {
+
+        width: 100%;
+
+        height: 50px;
+
+        border: none;
+
+        border-radius: 9px;
+
+        background: #000;
+
+        color: white;
+
+        font-weight: 700;
+
+        font-size: 16px;
+
+        transition: .3s;
+    }
+
+    .place-order-btn:hover {
+
+        background: #ffb6d2;
+
+        color: #000;
+    }
+
+
+    /* ================= FOOTER ================= */
+
+    .footer {
+
+        background: linear-gradient(
+            to right,
+            #07111d,
+            #000
+        );
+
+        color: #aaa;
+
+        padding: 55px 0 0;
+    }
+
+    .footer-logo {
+
+        color: white;
+
+        font-size: 27px;
+
+        font-weight: 800;
+
+        margin-bottom: 15px;
+    }
+
+    .footer-logo span {
+
+        color: #ffb6d2;
+    }
+
+    .footer-description {
+
+        color: #aaa;
+
+        font-size: 14px;
+
+        line-height: 1.7;
+    }
+
+    .footer-title {
+
+        color: white;
+
+        font-size: 17px;
+
+        font-weight: 700;
+
+        margin-bottom: 18px;
+
+        display: inline-block;
+
+        border-bottom: 2px solid #ffb6d2;
+
+        padding-bottom: 5px;
+    }
+
+    .footer-links {
+
+        list-style: none;
+
+        padding: 0;
+
+        margin: 0;
+    }
+
+    .footer-links li {
+
+        margin-bottom: 10px;
+    }
+
+    .footer-links a {
+
+        color: #aaa;
+
+        text-decoration: none;
+
+        font-size: 14px;
+
+        transition: .3s;
+    }
+
+    .footer-links a:hover {
+
+        color: #ffb6d2;
+
+        padding-left: 5px;
+    }
+
+    .footer-contact {
+
+        color: #aaa;
+
+        font-size: 14px;
+
+        line-height: 2;
+    }
+
+    .footer-bottom {
+
+        border-top:
+            1px solid rgba(255,255,255,.15);
+
+        margin-top: 45px;
+
+        padding: 20px 0;
+
+        color: #aaa;
+
+        font-size: 13px;
+
+        text-align: center;
+    }
+
+    .footer-bottom strong {
+
+        color: #ffb6d2;
+    }
+
+
+    /* ================= MOBILE ================= */
+
+    @media (max-width: 768px) {
+
+        .page-header {
+
+            padding: 50px 20px 30px;
+        }
+
+        .page-header h1 {
+
+            font-size: 34px;
+        }
+
+        .order-card {
+
+            padding: 18px;
+        }
+
+        .book-image {
+
+            width: 150px;
+
+            height: 220px;
+        }
+
+        .book-name {
+
+            font-size: 22px;
+
+            margin-top: 18px;
+        }
+
+        .sun {
+
+            width: 70px;
+
+            height: 70px;
+
+            right: 5%;
+
+            top: 30px;
+        }
+
+        .cloud {
+
+            transform: scale(.65);
+        }
+
+        .butterfly {
+
+            font-size: 30px;
+        }
+
+        .butterfly-8,
+        .butterfly-9,
+        .butterfly-10 {
+
+            display: none;
+        }
+
+        .flower {
+
+            font-size: 25px;
+        }
+
+    }
+
+</style>
+
+</head>
+
+<body>
+
+<!-- ================= NAVBAR ================= -->
+
+<nav class="navbar navbar-expand-lg bookstore-navbar">
+
+<div class="container">
+
+    <a class="navbar-brand" href="/home">
+
+        📚 <span>Book</span>Store
+
+    </a>
+
+
+    <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarMenu">
+
+        <span class="navbar-toggler-icon"></span>
+
+    </button>
+
+
+    <div
+        class="collapse navbar-collapse"
+        id="navbarMenu">
+
+        <ul class="navbar-nav ms-auto">
+
+            <li class="nav-item">
+
+                <a
+                    class="nav-link"
+                    href="/home">
+
+                    🏠 Home
+
+                </a>
+
+            </li>
+
+
+            <li class="nav-item">
+
+                <a
+                    class="nav-link"
+                    href="/productoverview">
+
+                    ❤️ My Likes
+
+                </a>
+
+            </li>
+
+
+            <li class="nav-item">
+
+                <a
+                    class="nav-link"
+                    href="/orderpage">
+
+                    📦 My Orders
+
+                </a>
+
+            </li>
+
+
+            <li class="nav-item">
+
+                <a
+                    class="nav-link"
+                    href="/logout">
+
+                    🚪 Logout
+
+                </a>
+
+            </li>
+
+        </ul>
+
+    </div>
+
+</div>
+
+</nav>
+
+<!-- ================= SKY BACKGROUND ================= -->
+
+<div class="sky-background">
+
+<div class="sky-area">
+
+
+    <!-- SUN -->
+
+    <div class="sun"></div>
+
+
+    <!-- CLOUDS -->
+
+    <div class="cloud cloud-1">☁️</div>
+
+    <div class="cloud cloud-2">☁️</div>
+
+    <div class="cloud cloud-3">☁️</div>
+
+    <div class="cloud cloud-4">☁️</div>
+
+
+    <!-- BUTTERFLIES -->
+
+    <div class="butterfly butterfly-1">🦋</div>
+
+    <div class="butterfly butterfly-2">🦋</div>
+
+    <div class="butterfly butterfly-3">🦋</div>
+
+    <div class="butterfly butterfly-4">🦋</div>
+
+    <div class="butterfly butterfly-5">🦋</div>
+
+    <div class="butterfly butterfly-6">🦋</div>
+
+    <div class="butterfly butterfly-7">🦋</div>
+
+    <div class="butterfly butterfly-8">🦋</div>
+
+    <div class="butterfly butterfly-9">🦋</div>
+
+    <div class="butterfly butterfly-10">🦋</div>
+
+
+    <!-- FLOWERS -->
+
+    <div class="flower flower-1">🌸</div>
+
+    <div class="flower flower-2">🌷</div>
+
+    <div class="flower flower-3">🌼</div>
+
+    <div class="flower flower-4">🌸</div>
+
+    <div class="flower flower-5">🌷</div>
+
+    <div class="flower flower-6">🌼</div>
+
+
+
+    <!-- ================= PAGE HEADER ================= -->
+
+    <div class="page-header">
+
+        <h1>
+
+            🛒 Place <span>Your Order</span>
+
+        </h1>
+
+        <p>
+
+            Select your address, check your book and place your order
+
+        </p>
+
+    </div>
+
+
+
+    <!-- ================= ORDER CONTENT ================= -->
+
+    <section class="order-section">
+
+        <div class="container">
+
+
+            <!-- ================= ADDRESS ================= -->
+
+            <div class="order-card">
+
+                <div class="order-title">
+
+                    📍 Select Delivery Address
+
+                </div>
+
+
+                {% if address %}
+
+                    {% for i in address %}
+
+
+                        <div
+                            class="address-card {% if loop.first %}selected{% endif %}"
+                            onclick="selectAddress({{ i.id }}, this)">
+
+
+                            <div class="address-type">
+
+                                {{ i.address_type }}
+
+                            </div>
+
+
+                            <div class="address-name">
+
+                                {{ i.full_name }}
+
+                            </div>
+
+
+                            <div class="address-text">
+
+                                📞 {{ i.mobile }}
+
+                                <br>
+
+                                {{ i.address }}
+
+                                <br>
+
+                                {{ i.city }},
+                                {{ i.state }}
+                                -
+                                {{ i.pincode }}
+
+                            </div>
+
+
+                            <!-- EDIT / DELETE -->
+
+                            <div class="d-flex gap-2 address-actions">
+
+
+                                <!-- EDIT -->
+
+                                <a
+                                    href="/addresses/edit/{{ i.id }}?book_id={{ book.id }}"
+                                    class="btn btn-sm btn-outline-primary"
+                                    onclick="event.stopPropagation();"
+                                >
+
+                                    ✏️ Edit
+
+                                </a>
+
+
+                                <!-- DELETE -->
+
+                                <form
+                                    action="/addresses/{{ i.id }}"
+                                    method="POST"
+                                    class="d-inline"
+                                    onclick="event.stopPropagation();"
+                                >
+
+                                    <input
+                                        type="hidden"
+                                        name="book_id"
+                                        value="{{ book.id }}"
+                                    >
+
+
+                                    <button
+                                        type="submit"
+                                        class="btn btn-sm btn-outline-danger"
+                                        onclick="return confirm('Are you sure you want to delete this address?');"
+                                    >
+
+                                        🗑️ Delete
+
+                                    </button>
+
+                                </form>
+
+                            </div>
+
+                        </div>
+
+
+                    {% endfor %}
+
+
+                {% else %}
+
+
+                    <div class="alert alert-warning">
+
+                        No saved address found.
+
+                        Please add a delivery address.
+
+                    </div>
+
+
+                {% endif %}
+
+
+                <!-- ADD ADDRESS -->
+
+                <a
+                    href="/addresses?book_id={{ book.id }}"
+                    class="add-address"
+                >
+
+                    ➕ Add New Delivery Address
+
+                </a>
+
+            </div>
+
+
+
+            <!-- ================= PRODUCT ================= -->
+
+            <div class="order-card">
+
+                <div class="order-title">
+
+                    📖 Product Details
+
+                </div>
+
+
+                <div class="row align-items-center">
+
+
+                    <!-- IMAGE -->
+
+                    <div class="col-md-4 text-center mb-4 mb-md-0">
+
+                        <img
+                            src="{{ url_for('static', filename='photos/' + book.image_name) }}"
+                            class="book-image"
+                            alt="{{ book.book_name }}"
+                        >
+
+                    </div>
+
+
+                    <!-- DETAILS -->
+
+                    <div class="col-md-8">
+
+
+                        <div class="book-name">
+
+                            {{ book.book_name }}
+
+                        </div>
+
+
+                        <div class="book-author">
+
+                            ✍️ By {{ book.author }}
+
+                        </div>
+
+
+                        <div class="book-description">
+
+                            {{ book.description }}
+
+                        </div>
+
+
+                        <!-- ORIGINAL PRICE -->
+
+                        <div>
+
+                            <span class="old-price">
+
+                                ₹{{ book.price }}
+
+                            </span>
+
+
+                            <span class="discount">
+
+                                SAVE 70%
+
+                            </span>
+
+                        </div>
+
+
+                        <!-- DISCOUNT PRICE -->
+
+                        <div class="final-price">
+
+                            ₹<span id="price">
+
+                                {{ "%.2f"|format(discount_price) }}
+
+                            </span>
+
+                        </div>
+
+
+                        <!-- QUANTITY -->
+
+                        <div class="quantity-box">
+
+                            <strong>
+
+                                Quantity:
+
+                            </strong>
+
+
+                            <button
+                                type="button"
+                                onclick="decreaseQuantity()"
+                            >
+
+                                −
+
+                            </button>
+
+
+                            <input
+                                type="text"
+                                id="quantity"
+                                value="1"
+                                readonly
+                            >
+
+
+                            <button
+                                type="button"
+                                onclick="increaseQuantity()"
+                            >
+
+                                +
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- ================= SUMMARY ================= -->
+
+            <div class="order-card">
+
+                <div class="order-title">
+
+                    🧾 Order Summary
+
+                </div>
+
+
+                <div class="summary-box">
+
+
+                    <div class="summary-row">
+
+                        <span>
+
+                            Book Price
+
+                        </span>
+
+                        <span>
+
+                            ₹{{ book.price }}
+
+                        </span>
+
+                    </div>
+
+
+                    <div class="summary-row">
+
+                        <span>
+
+                            Discount
+
+                        </span>
+
+                        <span class="text-success">
+
+                            70%
+
+                        </span>
+
+                    </div>
+
+
+                    <div class="summary-row">
+
+                        <span>
+
+                            Quantity
+
+                        </span>
+
+                        <span id="summaryQuantity">
+
+                            1
+
+                        </span>
+
+                    </div>
+
+
+                    <div class="summary-row">
+
+                        <span>
+
+                            Delivery
+
+                        </span>
+
+                        <span class="text-success">
+
+                            FREE
+
+                        </span>
+
+                    </div>
+
+
+                    <div class="summary-row total-row">
+
+                        <span>
+
+                            Total Amount
+
+                        </span>
+
+
+                        <span>
+
+                            ₹<span id="totalPrice">
+
+                                {{ "%.2f"|format(discount_price) }}
+
+                            </span>
+
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- ================= PAYMENT ================= -->
+
+            <div class="order-card">
+
+                <div class="order-title">
+
+                    💳 Payment Method
+
+                </div>
+
+
+                <form
+                    action="/payment"
+                    method="POST"
+                    onsubmit="return validateOrder();"
+                >
+
+
+                    <!-- BOOK ID -->
+
+                    <input
+                        type="hidden"
+                        name="book_id"
+                        value="{{ book.id }}"
+                    >
+
+
+                    <!-- ADDRESS ID -->
+
+                    <input
+                        type="hidden"
+                        name="address_id"
+                        id="address_id"
+                        value="{% if address %}{{ address[0].id }}{% endif %}"
+                    >
+
+
+                    <!-- QUANTITY -->
+
+                    <input
+                        type="hidden"
+                        name="quantity"
+                        id="hiddenQuantity"
+                        value="1"
+                    >
+
+
+                    <!-- FINAL AMOUNT -->
+
+                    <input
+                        type="hidden"
+                        name="final_amount"
+                        id="final_amount"
+                        value="{{ discount_price }}"
+                    >
+
+
+                    <div class="mb-4">
+
+                        <label class="form-label">
+
+                            <strong>
+
+                                Select Payment Method
+
+                            </strong>
+
+                        </label>
+
+
+                        <select
+                            name="payment"
+                            id="payment"
+                            class="form-select payment-select"
+                            required
+                        >
+
+                            <option value="">
+
+                                -- Select Payment Method --
+
+                            </option>
+
+
+                            <option value="Cash on Delivery">
+
+                                💵 Cash on Delivery
+
+                            </option>
+
+
+                            <option value="UPI">
+
+                                📱 UPI
+
+                            </option>
+
+
+                            <option value="GPay">
+
+                                🟢 GPay
+
+                            </option>
+
+
+                            <option value="Credit Card">
+
+                                💳 Credit Card
+
+                            </option>
+
+
+                            <option value="Debit Card">
+
+                                💳 Debit Card
+
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- PLACE ORDER -->
+
+                    <button
+                        type="submit"
+                        class="place-order-btn"
+                    >
+
+                        🛍️ Place Order
+
+                    </button>
+
+                </form>
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+</div>
+
+</div>
+
+<!-- ================= FOOTER ================= -->
+
+<footer class="footer">
+
+<div class="container">
+
+    <div class="row">
+
+
+        <!-- ABOUT -->
+
+        <div class="col-lg-5 col-md-6 footer-column">
+
+            <div class="footer-logo">
+
+                📚 <span>Book</span>Store
+
+            </div>
+
+
+            <p class="footer-description">
+
+                A place for every kind of reader.
+                Discover anime and manga, classic Tamil literature,
+                English stories, children's moral books and inspiring biographies.
+
+            </p>
+
+        </div>
+
+
+
+        <!-- QUICK LINKS -->
+
+        <div class="col-lg-3 col-md-6 footer-column">
+
+            <div class="footer-title">
+
+                Quick Links
+
+            </div>
+
+
+            <ul class="footer-links">
+
+                <li>
+
+                    <a href="/home">
+
+                        🏠 Home
+
+                    </a>
+
+                </li>
+
+
+                <li>
+
+                    <a href="/productoverview">
+
+                        ❤️ My Likes
+
+                    </a>
+
+                </li>
+
+
+                <li>
+
+                    <a href="/orderpage">
+
+                        📦 My Orders
+
+                    </a>
+
+                </li>
+
+
+                <li>
+
+                    <a href="/logout">
+
+                        🚪 Logout
+
+                    </a>
+
+                </li>
+
+            </ul>
+
+        </div>
+
+
+
+        <!-- CONTACT -->
+
+        <div class="col-lg-4 col-md-6 footer-column">
+
+            <div class="footer-title">
+
+                Contact Us
+
+            </div>
+
+
+            <div class="footer-contact">
+
+                📧 support@bookstore.com
+
+                <br>
+
+                📞 +91 98765 43210
+
+                <br>
+
+                📍 India
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- FOOTER BOTTOM -->
+
+    <div class="footer-bottom">
+
+        © 2026
+
+        <strong>BookStore</strong>.
+
+        All Rights Reserved.
+
+    </div>
+
+</div>
+
+</footer>
+
+<!-- ================= BOOTSTRAP JS ================= -->
+
+<script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
+</script>
+
+<script>
+
+
+/* ================= PRICE ================= */
+
+const discountPrice =
+    Number("{{ discount_price }}");
+
+
+/* ================= SELECT ADDRESS ================= */
+
+function selectAddress(id, element) {
+
+    document.getElementById("address_id").value = id;
+
+
+    const cards =
+        document.querySelectorAll(".address-card");
+
+
+    cards.forEach(function(card) {
+
+        card.classList.remove("selected");
+
+    });
+
+
+    element.classList.add("selected");
+
+}
+
+
+/* ================= INCREASE ================= */
+
+function increaseQuantity() {
+
+    let quantity =
+        parseInt(
+            document.getElementById("quantity").value
+        );
+
+
+    quantity++;
+
+
+    document.getElementById("quantity").value =
+        quantity;
+
+
+    document.getElementById("hiddenQuantity").value =
+        quantity;
+
+
+    document.getElementById("summaryQuantity").innerText =
+        quantity;
+
+
+    updateTotal(quantity);
+
+}
+
+
+/* ================= DECREASE ================= */
+
+function decreaseQuantity() {
+
+    let quantity =
+        parseInt(
+            document.getElementById("quantity").value
+        );
+
+
+    if (quantity > 1) {
+
+        quantity--;
+
+    }
+
+
+    document.getElementById("quantity").value =
+        quantity;
+
+
+    document.getElementById("hiddenQuantity").value =
+        quantity;
+
+
+    document.getElementById("summaryQuantity").innerText =
+        quantity;
+
+
+    updateTotal(quantity);
+
+}
+
+
+/* ================= UPDATE TOTAL ================= */
+
+function updateTotal(quantity) {
+
+    const total =
+        discountPrice * quantity;
+
+
+    document.getElementById("price").innerText =
+        discountPrice.toFixed(2);
+
+
+    document.getElementById("totalPrice").innerText =
+        total.toFixed(2);
+
+
+    document.getElementById("final_amount").value =
+        total.toFixed(2);
+
+}
+
+
+/* ================= VALIDATION ================= */
+
+function validateOrder() {
+
+    const addressId =
+        document.getElementById("address_id").value;
+
+
+    const payment =
+        document.getElementById("payment").value;
+
+
+    if (!addressId) {
+
+        alert("Please select a delivery address.");
+
+        return false;
+
+    }
+
+
+    if (!payment) {
+
+        alert("Please select a payment method.");
+
+        return false;
+
+    }
+
+
+    return true;
+
+}
+
+
+/* ================= FIRST ADDRESS ================= */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function() {
+
+        {% if address %}
+
+            document.getElementById("address_id").value =
+                "{{ address[0].id }}";
+
+        {% endif %}
+
+    }
+);
+
+</script>
+
+</body>
+
+</html>

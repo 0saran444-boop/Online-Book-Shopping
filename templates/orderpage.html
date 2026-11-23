@@ -1,0 +1,1867 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>My Orders - BookStore</title>
+
+
+<!-- Bootstrap -->
+<link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+    rel="stylesheet">
+
+
+<!-- Google Font -->
+<link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet">
+
+
+<!-- Common CSS -->
+<link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='style.css') }}">
+
+
+<style>
+
+    /* =====================================================
+       BASIC
+    ===================================================== */
+
+    * {
+        box-sizing: border-box;
+    }
+
+    html {
+        scroll-behavior: smooth;
+    }
+
+    body {
+        margin: 0;
+        font-family: 'Poppins', sans-serif;
+        background: #eefaff;
+        min-height: 100vh;
+        overflow-x: hidden;
+        color: #111;
+    }
+
+
+    /* =====================================================
+       SKY BACKGROUND
+    ===================================================== */
+
+    .sky-background {
+        position: relative;
+        overflow: hidden;
+
+        background:
+            linear-gradient(
+                180deg,
+                #73cfff 0%,
+                #a9e3ff 35%,
+                #dff6ff 70%,
+                #f7fdff 100%
+            );
+    }
+
+
+    /* =====================================================
+       SUN
+    ===================================================== */
+
+    .sun {
+        position: absolute;
+        top: 45px;
+        right: 7%;
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+
+        background:
+            radial-gradient(
+                circle,
+                #fff59d 0%,
+                #ffd93d 45%,
+                #ffb300 75%,
+                rgba(255,179,0,0) 100%
+            );
+
+        box-shadow:
+            0 0 40px
+            rgba(255,193,7,0.7);
+
+        z-index: 1;
+        pointer-events: none;
+    }
+
+
+    /* =====================================================
+       CLOUDS
+    ===================================================== */
+
+    .cloud {
+        position: absolute;
+        z-index: 2;
+        color: white;
+        font-size: 75px;
+        opacity: 0.75;
+        pointer-events: none;
+
+        animation:
+            cloudMove
+            30s
+            ease-in-out
+            infinite;
+    }
+
+    .cloud-1 {
+        top: 80px;
+        left: -80px;
+        animation-duration: 38s;
+    }
+
+    .cloud-2 {
+        top: 280px;
+        right: -100px;
+        font-size: 95px;
+        animation-duration: 45s;
+        animation-direction: reverse;
+    }
+
+    .cloud-3 {
+        top: 600px;
+        left: -100px;
+        font-size: 65px;
+        animation-duration: 50s;
+    }
+
+    .cloud-4 {
+        top: 850px;
+        right: 5%;
+        font-size: 60px;
+        animation-duration: 42s;
+    }
+
+    @keyframes cloudMove {
+
+        0% {
+            transform: translateX(0);
+        }
+
+        50% {
+            transform: translateX(100px);
+        }
+
+        100% {
+            transform: translateX(0);
+        }
+
+    }
+
+
+    /* =====================================================
+       BUTTERFLIES
+    ===================================================== */
+
+    .butterfly {
+        position: absolute;
+        z-index: 3;
+        font-size: 32px;
+        pointer-events: none;
+
+        animation:
+            butterflyFloat
+            5s
+            ease-in-out
+            infinite;
+    }
+
+    .butterfly-pink {
+        filter:
+            drop-shadow(
+                0 0 8px #ff69b4
+            );
+    }
+
+    .butterfly-white {
+        filter:
+            drop-shadow(
+                0 0 8px white
+            );
+    }
+
+    .butterfly-gold {
+        filter:
+            drop-shadow(
+                0 0 8px #ffd700
+            );
+    }
+
+    .butterfly-silver {
+        filter:
+            drop-shadow(
+                0 0 8px #eeeeee
+            );
+    }
+
+    .butterfly-1 {
+        top: 170px;
+        left: 7%;
+    }
+
+    .butterfly-2 {
+        top: 400px;
+        left: 28%;
+        font-size: 25px;
+        animation-delay: 1s;
+    }
+
+    .butterfly-3 {
+        top: 300px;
+        right: 18%;
+        font-size: 28px;
+        animation-delay: 2s;
+    }
+
+    .butterfly-4 {
+        top: 520px;
+        right: 7%;
+        font-size: 35px;
+        animation-delay: 1s;
+    }
+
+    .butterfly-5 {
+        top: 700px;
+        left: 10%;
+        font-size: 25px;
+        animation-delay: 2s;
+    }
+
+    .butterfly-6 {
+        top: 850px;
+        left: 45%;
+        font-size: 30px;
+        animation-delay: 1s;
+    }
+
+    .butterfly-7 {
+        top: 750px;
+        right: 25%;
+        font-size: 24px;
+        animation-delay: 3s;
+    }
+
+    .butterfly-8 {
+        top: 1050px;
+        left: 8%;
+        font-size: 28px;
+    }
+
+    .butterfly-9 {
+        top: 1100px;
+        right: 12%;
+        font-size: 27px;
+    }
+
+    .butterfly-10 {
+        top: 950px;
+        right: 40%;
+        font-size: 23px;
+    }
+
+    @keyframes butterflyFloat {
+
+        0%, 100% {
+            transform:
+                translateY(0)
+                rotate(-8deg);
+        }
+
+        50% {
+            transform:
+                translateY(-25px)
+                rotate(8deg);
+        }
+
+    }
+
+
+    /* =====================================================
+       FLOWERS
+    ===================================================== */
+
+    .flower {
+        position: absolute;
+        z-index: 2;
+        pointer-events: none;
+        font-size: 38px;
+
+        animation:
+            flowerFloat
+            4s
+            ease-in-out
+            infinite;
+    }
+
+    .flower-pink {
+        filter:
+            drop-shadow(
+                0 0 7px #ff69b4
+            );
+    }
+
+    .flower-white {
+        filter:
+            drop-shadow(
+                0 0 7px white
+            );
+    }
+
+    .flower-gold {
+        filter:
+            drop-shadow(
+                0 0 7px #ffd700
+            );
+    }
+
+    .flower-1 {
+        top: 240px;
+        left: 3%;
+    }
+
+    .flower-2 {
+        top: 480px;
+        right: 3%;
+        animation-delay: 1s;
+    }
+
+    .flower-3 {
+        top: 670px;
+        left: 4%;
+        animation-delay: 2s;
+    }
+
+    .flower-4 {
+        top: 900px;
+        right: 5%;
+        animation-delay: 1s;
+    }
+
+    .flower-5 {
+        top: 1050px;
+        left: 30%;
+        animation-delay: 2s;
+    }
+
+    .flower-6 {
+        top: 800px;
+        right: 45%;
+        animation-delay: 3s;
+    }
+
+    @keyframes flowerFloat {
+
+        0%, 100% {
+            transform:
+                translateY(0)
+                rotate(-5deg);
+        }
+
+        50% {
+            transform:
+                translateY(-12px)
+                rotate(5deg);
+        }
+
+    }
+
+
+    /* =====================================================
+       NAVBAR
+    ===================================================== */
+
+    .bookstore-navbar {
+        position: relative;
+        z-index: 100;
+        background: #000 !important;
+        padding: 13px 0;
+
+        box-shadow:
+            0 5px 20px
+            rgba(0,0,0,0.25);
+    }
+
+    .bookstore-navbar .navbar-brand {
+        color: white !important;
+        font-size: 25px;
+        font-weight: 800;
+    }
+
+    .bookstore-navbar .navbar-brand span {
+        color: #ffb6d2;
+    }
+
+    .bookstore-navbar .nav-link {
+        color: white !important;
+        font-weight: 600;
+        margin-left: 7px;
+        padding:
+            9px 15px !important;
+        border-radius: 8px;
+        transition: 0.3s;
+    }
+
+    .bookstore-navbar .nav-link:hover,
+    .bookstore-navbar .nav-link.active {
+        background: #ffb6d2;
+        color: #000 !important;
+    }
+
+    .navbar-toggler {
+        border:
+            1px solid #ffb6d2 !important;
+    }
+
+    .navbar-toggler-icon {
+        filter: invert(1);
+    }
+
+
+    /* =====================================================
+       ORDERS SECTION
+    ===================================================== */
+
+    .orders-section {
+        position: relative;
+        z-index: 10;
+        padding:
+            70px 0 90px;
+    }
+
+
+    /* =====================================================
+       PAGE TITLE
+    ===================================================== */
+
+    .orders-heading {
+        text-align: center;
+        margin-bottom: 45px;
+    }
+
+    .page-title {
+        color: #123b5d;
+        font-size: 45px;
+        font-weight: 800;
+        margin-bottom: 8px;
+    }
+
+    .page-title span {
+        color: #e75480;
+    }
+
+    .page-subtitle {
+        color: #526b7a;
+        font-size: 15px;
+        margin-bottom: 20px;
+    }
+
+    .title-decoration {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+    }
+
+    .title-line {
+        width: 70px;
+        height: 3px;
+        border-radius: 10px;
+        background: #ffb6d2;
+    }
+
+    .title-flower {
+        font-size: 21px;
+    }
+
+
+    /* =====================================================
+       ORDER CARD
+    ===================================================== */
+
+    .order-card {
+        position: relative;
+
+        background:
+            rgba(255,255,255,0.97);
+
+        border:
+            1px solid #cfe9f3;
+
+        border-radius: 18px;
+
+        padding: 25px;
+
+        margin-bottom: 25px;
+
+        box-shadow:
+            0 10px 28px
+            rgba(45,95,120,0.12);
+
+        transition: 0.3s;
+
+        overflow: hidden;
+    }
+
+    .order-card:hover {
+        transform:
+            translateY(-5px);
+
+        box-shadow:
+            0 16px 35px
+            rgba(45,95,120,0.18);
+    }
+
+    .order-card::before {
+        content: "🌸";
+        position: absolute;
+        right: 18px;
+        top: 8px;
+        font-size: 30px;
+        opacity: 0.3;
+    }
+
+
+    /* =====================================================
+       ORDER HEADER
+    ===================================================== */
+
+    .order-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        padding-bottom: 18px;
+        margin-bottom: 20px;
+
+        border-bottom:
+            2px dashed #d9edf5;
+    }
+
+    .order-id {
+        color: #123b5d;
+        font-weight: 800;
+        font-size: 17px;
+    }
+
+    .order-date {
+        color: #71828d;
+        font-size: 13px;
+        margin-top: 4px;
+    }
+
+
+    /* =====================================================
+       STATUS
+    ===================================================== */
+
+    .status {
+        display: inline-block;
+        padding:
+            8px 17px;
+        border-radius: 30px;
+        font-size: 12px;
+        font-weight: 700;
+    }
+
+    .status-paid {
+        color: #177245;
+        background: #dff8e9;
+        border:
+            1px solid #b8edcf;
+    }
+
+    .status-pending {
+        color: #946200;
+        background: #fff2cc;
+        border:
+            1px solid #ffe39a;
+    }
+
+    .status-cancelled {
+        color: #a52b3b;
+        background: #ffe0e5;
+        border:
+            1px solid #ffc0ca;
+    }
+
+
+    /* =====================================================
+       BOOK IMAGE
+    ===================================================== */
+
+    .book-image {
+        width: 115px;
+        height: 150px;
+
+        object-fit: cover;
+
+        border-radius: 14px;
+
+        background: #eefaff;
+
+        border:
+            3px solid white;
+
+        box-shadow:
+            0 7px 18px
+            rgba(30,80,110,0.15);
+
+        transition: 0.3s;
+    }
+
+    .book-image:hover {
+        transform:
+            scale(1.04);
+    }
+
+
+    /* =====================================================
+       BOOK NAME
+    ===================================================== */
+
+    .book-name {
+        color: #111;
+        font-size: 21px;
+        font-weight: 800;
+        line-height: 1.5;
+
+        white-space: normal;
+        overflow: visible;
+        text-overflow: unset;
+
+        word-break: normal;
+        overflow-wrap: anywhere;
+
+        max-width: 100%;
+    }
+
+    .author {
+        color: #687780;
+        font-size: 14px;
+    }
+
+
+    /* =====================================================
+       INFO BOX
+    ===================================================== */
+
+    .info-box {
+        background:
+            linear-gradient(
+                135deg,
+                #f2fbff,
+                #fff8fb
+            );
+
+        border:
+            1px solid #d9edf5;
+
+        border-radius: 14px;
+
+        padding:
+            13px 16px;
+
+        margin-top: 10px;
+    }
+
+    .info-label {
+        color: #71828d;
+        font-size: 11px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.4px;
+    }
+
+    .info-value {
+        color: #263d4a;
+        font-weight: 700;
+        margin-top: 3px;
+    }
+
+
+    /* =====================================================
+       AMOUNT
+    ===================================================== */
+
+    .amount {
+        color: #e75480;
+        font-size: 22px;
+        font-weight: 800;
+        margin-top: 3px;
+    }
+
+    .old-amount {
+        color: #999;
+        font-size: 14px;
+        text-decoration: line-through;
+        margin-right: 8px;
+        font-weight: 500;
+    }
+
+    .discount-text {
+        display: inline-block;
+        color: #177245;
+        background: #dff8e9;
+        padding: 3px 8px;
+        border-radius: 6px;
+        font-size: 11px;
+        font-weight: 700;
+        margin-left: 5px;
+    }
+
+
+    /* =====================================================
+       CANCEL BUTTON
+    ===================================================== */
+
+    .cancel-btn {
+        width: 100%;
+
+        border:
+            2px solid #ff8eb0;
+
+        color: #e75480;
+
+        background: white;
+
+        padding:
+            10px 18px;
+
+        border-radius: 10px;
+
+        font-weight: 700;
+
+        transition: 0.3s;
+    }
+
+    .cancel-btn:hover {
+        background: #ffb6d2;
+        color: #000;
+        border-color: #ffb6d2;
+
+        transform:
+            translateY(-2px);
+    }
+
+
+    /* =====================================================
+       EMPTY ORDERS
+    ===================================================== */
+
+    .empty-orders {
+        background:
+            rgba(255,255,255,0.97);
+
+        padding:
+            70px 25px;
+
+        border-radius: 20px;
+
+        text-align: center;
+
+        border:
+            1px solid #cfe9f3;
+
+        box-shadow:
+            0 12px 35px
+            rgba(45,95,120,0.12);
+    }
+
+    .empty-icon {
+        font-size: 75px;
+        margin-bottom: 20px;
+
+        animation:
+            emptyFloat
+            3s
+            ease-in-out
+            infinite;
+    }
+
+    @keyframes emptyFloat {
+
+        0%, 100% {
+            transform: translateY(0);
+        }
+
+        50% {
+            transform: translateY(-12px);
+        }
+
+    }
+
+    .empty-orders h3 {
+        color: #123b5d;
+        font-weight: 800;
+    }
+
+    .empty-orders p {
+        color: #687780;
+        max-width: 500px;
+        margin:
+            10px auto 25px;
+    }
+
+
+    /* =====================================================
+       SHOP BUTTON
+    ===================================================== */
+
+    .shop-btn {
+        display: inline-block;
+        text-decoration: none;
+
+        color: white;
+        background: #000;
+
+        font-weight: 700;
+
+        padding:
+            12px 28px;
+
+        border-radius: 8px;
+
+        transition: 0.3s;
+    }
+
+    .shop-btn:hover {
+        color: #000;
+        background: #ffb6d2;
+
+        transform:
+            translateY(-3px);
+    }
+
+
+    /* =====================================================
+       FOOTER
+    ===================================================== */
+
+    .bookstore-footer {
+        position: relative;
+        z-index: 10;
+
+        background:
+            linear-gradient(
+                135deg,
+                #07111d,
+                #000
+            );
+
+        color: white;
+
+        padding:
+            55px 0 0;
+
+        margin-top: 0;
+    }
+
+    .footer-logo {
+        color: white;
+        font-size: 27px;
+        font-weight: 800;
+        margin-bottom: 12px;
+    }
+
+    .footer-logo span {
+        color: #ffb6d2;
+    }
+
+    .footer-description {
+        color: #aaa;
+        font-size: 14px;
+        line-height: 1.8;
+    }
+
+    .footer-title {
+        color: white;
+        font-size: 17px;
+        font-weight: 700;
+        margin-bottom: 18px;
+
+        display: inline-block;
+
+        border-bottom:
+            2px solid #ffb6d2;
+
+        padding-bottom: 5px;
+    }
+
+    .footer-links {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .footer-links li {
+        margin-bottom: 9px;
+    }
+
+    .footer-links a {
+        color: #aaa;
+        text-decoration: none;
+        font-size: 14px;
+        transition: 0.3s;
+    }
+
+    .footer-links a:hover {
+        color: #ffb6d2;
+        padding-left: 5px;
+    }
+
+    .footer-contact {
+        color: #aaa;
+        font-size: 14px;
+        line-height: 1.8;
+    }
+
+    .footer-contact p {
+        margin-bottom: 9px;
+    }
+
+    .footer-contact strong {
+        color: white;
+    }
+
+    .footer-bottom {
+        border-top:
+            1px solid
+            rgba(255,255,255,.15);
+
+        margin-top: 45px;
+
+        padding: 20px 0;
+
+        color: #aaa;
+
+        font-size: 13px;
+
+        text-align: center;
+    }
+
+    .footer-bottom strong {
+        color: #ffb6d2;
+    }
+
+
+    /* =====================================================
+       MOBILE
+    ===================================================== */
+
+    @media (max-width: 768px) {
+
+        .orders-section {
+            padding:
+                45px 15px 70px;
+        }
+
+        .page-title {
+            font-size: 32px;
+        }
+
+        .order-card {
+            padding: 18px;
+            border-radius: 16px;
+        }
+
+        .order-header {
+            display: block;
+        }
+
+        .order-header > div:last-child {
+            margin-top: 12px;
+        }
+
+        .book-image {
+            width: 100px;
+            height: 130px;
+        }
+
+        .book-name {
+            font-size: 18px;
+            line-height: 1.5;
+        }
+
+        .butterfly {
+            font-size: 25px;
+        }
+
+        .butterfly-8,
+        .butterfly-9,
+        .butterfly-10 {
+            display: none;
+        }
+
+        .cloud {
+            transform: scale(.65);
+            opacity: .55;
+        }
+
+        .flower {
+            font-size: 27px;
+        }
+
+        .sun {
+            width: 70px;
+            height: 70px;
+            right: 5%;
+            top: 30px;
+        }
+
+        .bookstore-navbar .nav-link {
+            margin-left: 0;
+            margin-top: 4px;
+        }
+
+        .footer-column {
+            margin-bottom: 25px;
+        }
+
+    }
+
+
+    /* =====================================================
+       SMALL MOBILE
+    ===================================================== */
+
+    @media (max-width: 480px) {
+
+        .bookstore-navbar .navbar-brand {
+            font-size: 21px;
+        }
+
+        .page-title {
+            font-size: 27px;
+        }
+
+        .title-line {
+            width: 40px;
+        }
+
+        .title-flower {
+            font-size: 18px;
+        }
+
+        .order-card {
+            padding: 15px;
+        }
+
+        .book-image {
+            width: 95px;
+            height: 125px;
+        }
+
+        .book-name {
+            font-size: 17px;
+        }
+
+        .amount {
+            font-size: 20px;
+        }
+
+        .empty-orders {
+            padding:
+                50px 18px;
+        }
+
+        .empty-icon {
+            font-size: 60px;
+        }
+
+    }
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     NAVBAR
+===================================================== -->
+
+<nav class="navbar navbar-expand-lg bookstore-navbar">
+
+    <div class="container">
+
+        <a
+            class="navbar-brand"
+            href="/home">
+
+            📚 <span>Book</span>Store
+
+        </a>
+
+
+        <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarMenu">
+
+            <span class="navbar-toggler-icon"></span>
+
+        </button>
+
+
+        <div
+            class="collapse navbar-collapse"
+            id="navbarMenu">
+
+            <ul class="navbar-nav ms-auto">
+
+
+                <li class="nav-item">
+
+                    <a
+                        class="nav-link"
+                        href="/home">
+
+                        🏠 Home
+
+                    </a>
+
+                </li>
+
+
+                <li class="nav-item">
+
+                    <a
+                        class="nav-link"
+                        href="/productoverview">
+
+                        ❤️ My Likes
+
+                    </a>
+
+                </li>
+
+
+                <li class="nav-item">
+
+                    <a
+                        class="nav-link active"
+                        href="/orderpage">
+
+                        📦 My Orders
+
+                    </a>
+
+                </li>
+
+
+                <li class="nav-item">
+
+                    <a
+                        class="nav-link"
+                        href="/logout">
+
+                        🚪 Logout
+
+                    </a>
+
+                </li>
+
+
+            </ul>
+
+        </div>
+
+    </div>
+
+</nav>
+
+
+
+<!-- =====================================================
+     SKY AREA
+===================================================== -->
+
+<div class="sky-background">
+
+
+    <!-- SUN -->
+
+    <div class="sun"></div>
+
+
+    <!-- CLOUDS -->
+
+    <div class="cloud cloud-1">
+        ☁️
+    </div>
+
+    <div class="cloud cloud-2">
+        ☁️
+    </div>
+
+    <div class="cloud cloud-3">
+        ☁️
+    </div>
+
+    <div class="cloud cloud-4">
+        ☁️
+    </div>
+
+
+    <!-- BUTTERFLIES -->
+
+    <span class="butterfly butterfly-pink butterfly-1">
+        🦋
+    </span>
+
+    <span class="butterfly butterfly-white butterfly-2">
+        🦋
+    </span>
+
+    <span class="butterfly butterfly-gold butterfly-3">
+        🦋
+    </span>
+
+    <span class="butterfly butterfly-silver butterfly-4">
+        🦋
+    </span>
+
+    <span class="butterfly butterfly-pink butterfly-5">
+        🦋
+    </span>
+
+    <span class="butterfly butterfly-white butterfly-6">
+        🦋
+    </span>
+
+    <span class="butterfly butterfly-gold butterfly-7">
+        🦋
+    </span>
+
+    <span class="butterfly butterfly-pink butterfly-8">
+        🦋
+    </span>
+
+    <span class="butterfly butterfly-white butterfly-9">
+        🦋
+    </span>
+
+    <span class="butterfly butterfly-gold butterfly-10">
+        🦋
+    </span>
+
+
+    <!-- FLOWERS -->
+
+    <span class="flower flower-pink flower-1">
+        🌸
+    </span>
+
+    <span class="flower flower-white flower-2">
+        🌼
+    </span>
+
+    <span class="flower flower-gold flower-3">
+        🌻
+    </span>
+
+    <span class="flower flower-pink flower-4">
+        🌷
+    </span>
+
+    <span class="flower flower-white flower-5">
+        🌸
+    </span>
+
+    <span class="flower flower-gold flower-6">
+        🌼
+    </span>
+
+
+
+    <!-- =================================================
+         ORDERS
+    ================================================== -->
+
+    <div class="container orders-section">
+
+
+        <!-- PAGE TITLE -->
+
+        <div class="orders-heading">
+
+            <h1 class="page-title">
+
+                📦 My <span>Orders</span>
+
+            </h1>
+
+            <p class="page-subtitle">
+
+                Your books, your journey, your little collection. 🌸
+
+            </p>
+
+            <div class="title-decoration">
+
+                <div class="title-line"></div>
+
+                <div class="title-flower">
+
+                    🌸 🦋 🌸
+
+                </div>
+
+                <div class="title-line"></div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =================================================
+             ORDERS AVAILABLE
+        ================================================== -->
+
+        {% if orders %}
+
+
+            {% for i in orders %}
+
+
+            <!-- ORDER CARD -->
+
+            <div class="order-card">
+
+
+                <!-- ORDER HEADER -->
+
+                <div class="order-header">
+
+                    <div>
+
+                        <div class="order-id">
+
+                            📦 Order #{{ i.order_id }}
+
+                        </div>
+
+                        <div class="order-date">
+
+                            🗓️ Ordered on {{ i.created_at }}
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- PAYMENT STATUS -->
+
+                    <div>
+
+                        {% if i.payment_status == "Paid" %}
+
+                            <span class="status status-paid">
+
+                                ✓ Paid
+
+                            </span>
+
+                        {% elif i.payment_status == "Cancelled" %}
+
+                            <span class="status status-cancelled">
+
+                                ✕ Cancelled
+
+                            </span>
+
+                        {% else %}
+
+                            <span class="status status-pending">
+
+                                ⏳ Pending
+
+                            </span>
+
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- ORDER CONTENT -->
+
+                <div class="row align-items-center">
+
+
+                    <!-- BOOK IMAGE -->
+
+                    <div
+                        class="col-md-2 text-center mb-3 mb-md-0">
+
+                        {% if i.image_name %}
+
+                            <img
+                                src="{{ url_for(
+                                    'static',
+                                    filename='photos/' + i.image_name
+                                ) }}"
+                                class="book-image"
+                                alt="{{ i.book_name }}">
+
+                        {% else %}
+
+                            <div
+                                class="
+                                    book-image
+                                    d-flex
+                                    align-items-center
+                                    justify-content-center
+                                    mx-auto
+                                ">
+
+                                📖
+
+                            </div>
+
+                        {% endif %}
+
+                    </div>
+
+
+
+                    <!-- BOOK DETAILS -->
+
+                    <div
+                        class="col-md-4 mb-3 mb-md-0">
+
+                        <div class="book-name">
+
+                            {{ i.book_name }}
+
+                        </div>
+
+                        <div class="author mt-1">
+
+                            ✍️ {{ i.author }}
+
+                        </div>
+
+                        <div class="mt-3">
+
+                            📚 Quantity:
+
+                            <strong>
+
+                                {{ i.quantity }}
+
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- PAYMENT DETAILS -->
+
+                    <div
+                        class="col-md-3 mb-3 mb-md-0">
+
+
+                        <!-- PAYMENT METHOD -->
+
+                        <div class="info-box">
+
+                            <div class="info-label">
+
+                                Payment Method
+
+                            </div>
+
+                            <div class="info-value">
+
+                                {% if i.payment_method == "UPI" %}
+
+                                    📱 UPI
+
+                                {% elif i.payment_method == "GPay" %}
+
+                                    🟢 Google Pay
+
+                                {% elif i.payment_method == "COD" %}
+
+                                    💵 Cash on Delivery
+
+                                {% elif i.payment_method == "Cash on Delivery" %}
+
+                                    💵 Cash on Delivery
+
+                                {% else %}
+
+                                    {{ i.payment_method }}
+
+                                {% endif %}
+
+                            </div>
+
+                        </div>
+
+
+
+                        <!-- DISCOUNTED TOTAL -->
+
+                        <div class="info-box">
+
+                            <div class="info-label">
+
+                                Total Amount
+
+                            </div>
+
+
+                            <!--
+                                70% DISCOUNT
+
+                                Customer pays 30%.
+
+                                Example:
+                                ₹1000 → ₹300
+                            -->
+
+                            <div class="amount">
+
+                                <span class="old-amount">
+
+                                    ₹{{ i.amount }}
+
+                                </span>
+
+
+                                ₹{{ "%.2f"|format(
+                                    i.amount|float * 0.30
+                                ) }}
+
+
+                                <span class="discount-text">
+
+                                    70% OFF
+
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- DELIVERY -->
+
+                    <div
+                        class="col-md-3">
+
+
+                        <div class="info-box">
+
+                            <div class="info-label">
+
+                                Expected Delivery
+
+                            </div>
+
+                            <div class="info-value">
+
+                                {% if i.delivery_date %}
+
+                                    📅 {{ i.delivery_date }}
+
+                                {% else %}
+
+                                    🌸 Will be updated
+
+                                {% endif %}
+
+                            </div>
+
+                        </div>
+
+
+
+                        <!-- CANCEL -->
+
+                        {% if i.payment_status != "Cancelled" %}
+
+                            <form
+                                action="/cancelorder/{{ i.order_id }}"
+                                method="POST"
+                                class="mt-3">
+
+                                <button
+                                    type="submit"
+                                    class="cancel-btn"
+                                    onclick="
+                                        return confirm(
+                                            'Are you sure you want to cancel this order?'
+                                        );
+                                    ">
+
+                                    ✕ Cancel Order
+
+                                </button>
+
+                            </form>
+
+                        {% else %}
+
+                            <div
+                                class="
+                                    text-center
+                                    text-danger
+                                    mt-3
+                                ">
+
+                                🌸 Order Cancelled
+
+                            </div>
+
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            {% endfor %}
+
+
+        {% else %}
+
+
+            <!-- =================================================
+                 NO ORDERS
+            ================================================== -->
+
+            <div class="empty-orders">
+
+
+                <div class="empty-icon">
+
+                    📦 🦋
+
+                </div>
+
+
+                <h3>
+
+                    No Orders Yet 🌸
+
+                </h3>
+
+
+                <p>
+
+                    You haven't placed any orders yet.
+
+                    Start shopping and find your favourite books.
+
+                </p>
+
+
+                <a
+                    href="/home"
+                    class="shop-btn">
+
+                    🛍️ Start Shopping
+
+                </a>
+
+
+            </div>
+
+
+        {% endif %}
+
+
+    </div>
+
+</div>
+
+
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+
+<footer class="bookstore-footer">
+
+    <div class="container">
+
+        <div class="row g-4">
+
+
+            <!-- ABOUT -->
+
+            <div
+                class="col-lg-5 col-md-6 footer-column">
+
+                <div class="footer-logo">
+
+                    📚 <span>Book</span>Store
+
+                </div>
+
+                <p class="footer-description">
+
+                    A place for every kind of reader.
+                    Discover anime and manga, classic
+                    Tamil literature, English stories,
+                    children's moral books and inspiring
+                    biographies.
+
+                </p>
+
+            </div>
+
+
+
+            <!-- QUICK LINKS -->
+
+            <div
+                class="col-lg-3 col-md-6 footer-column">
+
+                <h5 class="footer-title">
+
+                    Quick Links
+
+                </h5>
+
+                <ul class="footer-links">
+
+                    <li>
+                        <a href="/home">
+                            🏠 Home
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="/productoverview">
+                            ❤️ My Likes
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="/orderpage">
+                            📦 My Orders
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="/logout">
+                            🚪 Logout
+                        </a>
+                    </li>
+
+                </ul>
+
+            </div>
+
+
+
+            <!-- CONTACT -->
+
+            <div
+                class="col-lg-4 col-md-6 footer-column">
+
+                <h5 class="footer-title">
+
+                    Contact
+
+                </h5>
+
+                <div class="footer-contact">
+
+                    <p>
+
+                        📧
+                        <strong>Email:</strong>
+                        support@bookstore.com
+
+                    </p>
+
+                    <p>
+
+                        📞
+                        <strong>Phone:</strong>
+                        +91 98765 43210
+
+                    </p>
+
+                    <p>
+
+                        📍
+                        <strong>Location:</strong>
+                        India
+
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="footer-bottom">
+
+            © 2026
+
+            <strong>BookStore</strong>
+
+            . All Rights Reserved.
+
+        </div>
+
+    </div>
+
+</footer>
+
+
+
+<!-- =====================================================
+     BOOTSTRAP JS
+===================================================== -->
+
+<script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
+</script>
+
+
+</body>
+
+</html>
+

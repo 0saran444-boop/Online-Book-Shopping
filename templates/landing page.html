@@ -1,0 +1,1536 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BookStore - Discover Your Next Book</title>
+
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Google Font: Poppins -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <style>
+        /* =====================================================
+           BODY & GLOBAL
+        ===================================================== */
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #eefaff;
+            color: #111;
+            font-family: "Poppins", sans-serif;
+            overflow-x: hidden;
+            margin: 0;
+        }
+
+        /* =====================================================
+           NAVBAR
+        ===================================================== */
+        .landing-navbar {
+            background: #111;
+            padding: 16px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.18);
+        }
+
+        .landing-logo {
+            color: white;
+            font-size: 26px;
+            font-weight: 700;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .landing-logo:hover {
+            color: #bdeeff;
+        }
+
+        .landing-nav-link {
+            color: white;
+            text-decoration: none;
+            margin-left: 24px;
+            font-weight: 600;
+            font-size: 15px;
+            transition: 0.3s;
+        }
+
+        .landing-nav-link:hover {
+            color: #bdeeff;
+        }
+
+        .landing-nav-btn {
+            background: white;
+            color: #111 !important;
+            padding: 8px 20px;
+            border-radius: 8px;
+            margin-left: 20px;
+            transition: 0.3s;
+        }
+
+        .landing-nav-btn:hover {
+            background: #bdeeff;
+            color: #111 !important;
+        }
+
+        /* =====================================================
+           HERO
+        ===================================================== */
+        .landing-hero {
+            min-height: 680px;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, #bdeeff, #eefaff 55%, #d9f5ff);
+            padding: 60px 0 80px;
+        }
+
+        /* Stars Background */
+        .landing-hero::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image:
+                radial-gradient(circle, rgba(255, 255, 255, 0.9) 1px, transparent 1px),
+                radial-gradient(circle, rgba(255, 255, 255, 0.7) 1px, transparent 1px);
+            background-size: 80px 80px, 130px 130px;
+            background-position: 10px 20px, 40px 60px;
+            opacity: 0.8;
+            pointer-events: none;
+        }
+
+        /* =====================================================
+           FLOATING MOON & HERO BOOK DISPLAY
+        ===================================================== */
+        .hero-book {
+            position: relative;
+            text-align: center;
+        }
+
+        .moon-wrapper {
+            position: relative;
+            width: 320px;
+            height: 320px;
+            margin: 0 auto 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .moon {
+            width: 280px;
+            height: 280px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 35% 30%, #ffffff, #e9f8ff 55%, #bdeeff);
+            box-shadow:
+                0 0 35px rgba(255, 255, 255, 0.95),
+                0 0 80px rgba(141, 223, 255, 0.8),
+                0 0 130px rgba(141, 223, 255, 0.5);
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            animation: moonFloat 5s ease-in-out infinite;
+            z-index: 1;
+        }
+
+        .moon::before {
+            content: "";
+            position: absolute;
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: #c9edfb;
+            top: 55px;
+            left: 55px;
+            box-shadow:
+                85px 25px 0 #d2f0fa,
+                30px 110px 0 #c6eafa,
+                115px 135px 0 #d7f3fc;
+            opacity: 0.65;
+        }
+
+        /* 3D Floating Book Showcase */
+        .hero-showcase-books {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: moonFloat 5s ease-in-out infinite;
+        }
+
+        .hero-book-card-main {
+            width: 165px;
+            height: 235px;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 16px 36px rgba(0, 0, 0, 0.28);
+            transform: rotate(-6deg) translateY(-8px);
+            transition: 0.4s ease;
+            border: 3px solid #ffffff;
+            background: #ffffff;
+        }
+
+        .hero-book-card-main img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .hero-book-card-sub {
+            width: 135px;
+            height: 195px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.22);
+            position: absolute;
+            right: -25px;
+            bottom: -20px;
+            transform: rotate(8deg);
+            transition: 0.4s ease;
+            border: 3px solid #ffffff;
+            background: #ffffff;
+        }
+
+        .hero-book-card-sub img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .hero-book:hover .hero-book-card-main {
+            transform: rotate(-2deg) translateY(-14px) scale(1.03);
+        }
+
+        .hero-book:hover .hero-book-card-sub {
+            transform: rotate(5deg) translateY(-6px) scale(1.04);
+        }
+
+        /* Floating Pill Tag */
+        .hero-float-pill {
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #111;
+            color: #ffffff;
+            padding: 8px 18px;
+            border-radius: 25px;
+            font-size: 13px;
+            font-weight: 700;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.18);
+            white-space: nowrap;
+            z-index: 5;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .hero-float-pill span {
+            color: #bdeeff;
+        }
+
+        @keyframes moonFloat {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-14px); }
+            100% { transform: translateY(0); }
+        }
+
+        /* =====================================================
+           HERO CONTENT
+        ===================================================== */
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-small-title {
+            display: inline-block;
+            background: white;
+            color: #111;
+            padding: 8px 18px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 700;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            margin-bottom: 20px;
+        }
+
+        .hero-heading {
+            font-size: 56px;
+            font-weight: 800;
+            color: #111;
+            line-height: 1.1;
+            margin-bottom: 22px;
+            letter-spacing: -0.5px;
+        }
+
+        .hero-heading span {
+            color: #238db5;
+        }
+
+        .hero-description {
+            font-size: 18px;
+            color: #555;
+            line-height: 1.8;
+            max-width: 600px;
+            margin: 20px 0 32px;
+        }
+
+        /* =====================================================
+           HERO BUTTONS
+        ===================================================== */
+        .shop-btn {
+            background: #111;
+            color: white;
+            padding: 14px 32px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 16px;
+            display: inline-block;
+            transition: 0.3s;
+        }
+
+        .shop-btn:hover {
+            background: #333;
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.18);
+        }
+
+        .login-btn {
+            border: 2px solid #111;
+            color: #111;
+            padding: 12px 28px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 16px;
+            margin-left: 12px;
+            display: inline-block;
+            transition: 0.3s;
+            background: transparent;
+        }
+
+        .login-btn:hover {
+            background: #111;
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        /* Floating Stars */
+        .star {
+            position: absolute;
+            color: white;
+            font-size: 18px;
+            animation: starTwinkle 2s infinite alternate;
+            pointer-events: none;
+        }
+
+        .star-1 { top: 80px; left: 8%; }
+        .star-2 { top: 170px; left: 40%; animation-delay: 0.5s; }
+        .star-3 { top: 100px; right: 28%; animation-delay: 1s; }
+        .star-4 { bottom: 130px; right: 8%; animation-delay: 1.5s; }
+        .star-5 { bottom: 70px; left: 24%; animation-delay: 0.8s; }
+
+        @keyframes starTwinkle {
+            from { opacity: 0.3; transform: scale(0.8); }
+            to { opacity: 1; transform: scale(1.2); }
+        }
+
+        /* =====================================================
+           FEATURES SECTION
+        ===================================================== */
+        .features-section {
+            padding: 85px 0 75px;
+            background: #eefaff;
+        }
+
+        .section-heading {
+            text-align: center;
+            font-size: 38px;
+            font-weight: 800;
+            color: #111;
+            margin-bottom: 12px;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: #777;
+            font-size: 17px;
+            margin-bottom: 50px;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 38px 28px;
+            border-radius: 20px;
+            text-align: center;
+            height: 100%;
+            border: 1px solid #d9f3ff;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.07);
+            transition: 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.11);
+        }
+
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: #eefaff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 38px;
+        }
+
+        .feature-title {
+            font-size: 21px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .feature-text {
+            color: #777;
+            line-height: 1.7;
+            margin: 0;
+            font-size: 15px;
+        }
+
+        /* =====================================================
+           POPULAR CATEGORIES (WITH IMAGES)
+        ===================================================== */
+        .books-section {
+            padding: 85px 0 95px;
+            background: white;
+        }
+
+        .sample-book {
+            background: #f8fdff;
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid #d9f3ff;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.07);
+            transition: 0.35s ease;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sample-book:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 16px 32px rgba(0, 0, 0, 0.12);
+            border-color: #bdeeff;
+        }
+
+        .sample-book-image-box {
+            height: 230px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #dff7ff, #f7fdff);
+            padding: 16px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .sample-book-img {
+            max-height: 198px;
+            max-width: 82%;
+            object-fit: contain;
+            border-radius: 8px;
+            box-shadow: 0 8px 22px rgba(0, 0, 0, 0.16);
+            transition: 0.35s ease;
+        }
+
+        .sample-book:hover .sample-book-img {
+            transform: scale(1.05) translateY(-4px);
+        }
+
+        .sample-book-badge {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: rgba(17, 17, 17, 0.85);
+            color: #ffffff;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 15px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .sample-book-body {
+            padding: 24px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .sample-book-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 6px;
+            color: #111;
+        }
+
+        .sample-book-author {
+            color: #777;
+            margin-bottom: 16px;
+            font-size: 14px;
+        }
+
+        .sample-price {
+            color: #238db5;
+            font-size: 16px;
+            font-weight: 700;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: 0.3s;
+        }
+
+        .sample-price:hover {
+            color: #111;
+            transform: translateX(4px);
+        }
+
+        /* =====================================================
+           FEATURED BESTSELLERS SHOWCASE
+        ===================================================== */
+        .bestsellers-section {
+            padding: 85px 0 95px;
+            background: #eefaff;
+        }
+
+        .bestseller-card {
+            background: white;
+            border-radius: 20px;
+            border: 1px solid #d9f3ff;
+            overflow: hidden;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.07);
+            transition: 0.35s ease;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .bestseller-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 16px 32px rgba(0, 0, 0, 0.12);
+            border-color: #bdeeff;
+        }
+
+        .bestseller-img-box {
+            height: 240px;
+            background: linear-gradient(135deg, #eefaff, #ffffff);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .bestseller-img {
+            max-height: 208px;
+            max-width: 85%;
+            object-fit: contain;
+            border-radius: 8px;
+            box-shadow: 0 10px 24px rgba(0, 0, 0, 0.14);
+            transition: 0.35s ease;
+        }
+
+        .bestseller-card:hover .bestseller-img {
+            transform: scale(1.05);
+        }
+
+        .bestseller-discount {
+            position: absolute;
+            top: 14px;
+            left: 14px;
+            background: #28a745;
+            color: white;
+            font-size: 12px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 12px;
+        }
+
+        .bestseller-body {
+            padding: 22px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .bestseller-name {
+            font-size: 18px;
+            font-weight: 700;
+            color: #111;
+            margin-bottom: 5px;
+            line-height: 1.35;
+        }
+
+        .bestseller-author {
+            color: #777;
+            font-size: 13px;
+            margin-bottom: 12px;
+        }
+
+        .bestseller-rating {
+            color: #ffb800;
+            font-size: 13px;
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+
+        .bestseller-price-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: auto;
+            padding-top: 12px;
+            border-top: 1px solid #f0f4f8;
+        }
+
+        .bestseller-price {
+            font-size: 21px;
+            font-weight: 800;
+            color: #238db5;
+        }
+
+        .bestseller-btn {
+            background: #111;
+            color: white;
+            padding: 7px 18px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 700;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        .bestseller-btn:hover {
+            background: #238db5;
+            color: white;
+        }
+
+        /* =====================================================
+           MANGA & SPECIAL SPOTLIGHT BANNER
+        ===================================================== */
+        .spotlight-section {
+            padding: 30px 0 85px;
+            background: #eefaff;
+        }
+
+        .spotlight-card {
+            background: linear-gradient(135deg, #111822, #0d1218);
+            border-radius: 24px;
+            overflow: hidden;
+            border: 1px solid rgba(189, 238, 255, 0.25);
+            box-shadow: 0 18px 40px rgba(0, 0, 0, 0.22);
+            color: white;
+        }
+
+        .spotlight-content {
+            padding: 48px;
+        }
+
+        .spotlight-pill {
+            display: inline-block;
+            background: rgba(189, 238, 255, 0.15);
+            color: #bdeeff;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            margin-bottom: 18px;
+            letter-spacing: 0.5px;
+        }
+
+        .spotlight-title {
+            font-size: 34px;
+            font-weight: 800;
+            color: white;
+            margin-bottom: 16px;
+            line-height: 1.2;
+        }
+
+        .spotlight-text {
+            color: #c9d5e0;
+            font-size: 16px;
+            line-height: 1.7;
+            margin-bottom: 28px;
+            max-width: 520px;
+        }
+
+        .spotlight-image-box {
+            position: relative;
+            height: 100%;
+            min-height: 320px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            background: radial-gradient(circle, rgba(141, 223, 255, 0.18) 0%, transparent 70%);
+        }
+
+        .spotlight-img {
+            max-height: 280px;
+            width: 90%;
+            object-fit: cover;
+            border-radius: 16px;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.45);
+            border: 2px solid rgba(189, 238, 255, 0.3);
+            transition: 0.4s ease;
+        }
+
+        .spotlight-card:hover .spotlight-img {
+            transform: scale(1.03);
+            border-color: #bdeeff;
+        }
+
+        /* =====================================================
+           OFFER SECTION (WITH BOOK GALLERY)
+        ===================================================== */
+        .offer-section {
+            position: relative;
+            overflow: hidden;
+            background: #111;
+            color: white;
+            padding: 85px 20px 80px;
+            text-align: center;
+        }
+
+        .offer-section::before {
+            content: "☾";
+            position: absolute;
+            font-size: 300px;
+            color: rgba(255, 255, 255, 0.04);
+            right: 5%;
+            top: -100px;
+            pointer-events: none;
+        }
+
+        .offer-title {
+            font-size: 40px;
+            font-weight: 800;
+            position: relative;
+            z-index: 2;
+            margin-bottom: 14px;
+        }
+
+        .offer-text {
+            color: #ccc;
+            font-size: 18px;
+            margin: 0 auto 32px;
+            max-width: 620px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Thumbnail Strip in Offer */
+        .offer-covers-strip {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            margin: 0 auto 36px;
+            flex-wrap: wrap;
+            max-width: 800px;
+        }
+
+        .offer-cover-thumb {
+            width: 85px;
+            height: 125px;
+            border-radius: 8px;
+            object-fit: cover;
+            border: 2px solid rgba(255, 255, 255, 0.25);
+            box-shadow: 0 8px 18px rgba(0, 0, 0, 0.4);
+            transition: 0.3s ease;
+        }
+
+        .offer-cover-thumb:hover {
+            transform: translateY(-6px) scale(1.08);
+            border-color: #bdeeff;
+            box-shadow: 0 12px 24px rgba(189, 238, 255, 0.3);
+        }
+
+        .offer-section .shop-btn {
+            background: white;
+            color: #111;
+            position: relative;
+            z-index: 2;
+        }
+
+        .offer-section .shop-btn:hover {
+            background: #bdeeff;
+            color: #111;
+        }
+
+        /* =====================================================
+           FOOTER
+        ===================================================== */
+        .landing-footer {
+            background: #222;
+            color: white;
+            padding: 55px 0 25px;
+        }
+
+        .footer-heading {
+            font-weight: 700;
+            font-size: 18px;
+            margin-bottom: 18px;
+            color: #ffffff;
+        }
+
+        .landing-footer p {
+            color: #ccc;
+            line-height: 1.7;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .landing-footer a {
+            color: #ccc;
+            text-decoration: none;
+            transition: 0.25s;
+        }
+
+        .landing-footer a:hover {
+            color: #bdeeff;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #3d3d3d;
+            margin-top: 35px;
+            padding-top: 20px;
+            text-align: center;
+            color: #aaa;
+            font-size: 14px;
+        }
+
+        /* =====================================================
+           RESPONSIVE MOBILE
+        ===================================================== */
+        @media (max-width: 991px) {
+            .landing-hero {
+                padding: 60px 0;
+                min-height: auto;
+            }
+
+            .hero-heading {
+                font-size: 44px;
+            }
+
+            .moon-wrapper {
+                margin-top: 40px;
+            }
+
+            .spotlight-content {
+                padding: 35px 25px;
+            }
+
+            .spotlight-image-box {
+                min-height: 250px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-heading {
+                font-size: 36px;
+            }
+
+            .hero-description {
+                font-size: 16px;
+            }
+
+            .moon-wrapper {
+                width: 260px;
+                height: 260px;
+            }
+
+            .moon {
+                width: 220px;
+                height: 220px;
+                top: 20px;
+                left: 20px;
+            }
+
+            .hero-book-card-main {
+                width: 130px;
+                height: 185px;
+            }
+
+            .hero-book-card-sub {
+                width: 105px;
+                height: 150px;
+                right: -15px;
+            }
+
+            .login-btn {
+                margin-left: 0;
+                margin-top: 12px;
+            }
+
+            .landing-nav-link {
+                margin-left: 12px;
+                font-size: 14px;
+            }
+
+            .section-heading {
+                font-size: 30px;
+            }
+
+            .offer-title {
+                font-size: 30px;
+            }
+
+            .offer-cover-thumb {
+                width: 65px;
+                height: 95px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- =====================================================
+         NAVBAR
+    ===================================================== -->
+    <nav class="landing-navbar">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center">
+                <a href="/" class="landing-logo">
+                    📚 BookStore
+                </a>
+
+                <div class="d-flex align-items-center">
+                    <a href="/login" class="landing-nav-link">
+                        Login
+                    </a>
+                    <a href="/register" class="landing-nav-link landing-nav-btn">
+                        Register
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- =====================================================
+         HERO SECTION
+    ===================================================== -->
+    <section class="landing-hero">
+        <!-- Floating Stars -->
+        <div class="star star-1">✦</div>
+        <div class="star star-2">✧</div>
+        <div class="star star-3">✦</div>
+        <div class="star star-4">✧</div>
+        <div class="star star-5">✦</div>
+
+        <div class="container">
+            <div class="row align-items-center">
+                <!-- HERO TEXT -->
+                <div class="col-lg-7">
+                    <div class="hero-content">
+                        <div class="hero-small-title">
+                            📖 Welcome to BookStore
+                        </div>
+
+                        <h1 class="hero-heading">
+                            Find Your Next
+                            <span>Favourite Book</span>
+                        </h1>
+
+                        <p class="hero-description">
+                            Discover amazing books, explore new authors and enjoy great prices — all in one place.
+                            From programming & academic guides to classic Tamil literature and manga novels, your next story is waiting for you.
+                        </p>
+
+                        <div class="mt-4">
+                            <a href="/login" class="shop-btn">
+                                🛒 Start Shopping
+                            </a>
+                            <a href="/register" class="login-btn">
+                                Create Account
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- MOON & 3D FLOATING BOOK SHOWCASE -->
+                <div class="col-lg-5">
+                    <div class="hero-book">
+                        <div class="moon-wrapper">
+                            <!-- Glowing Moon -->
+                            <div class="moon"></div>
+
+                            <!-- Floating Book Covers -->
+                            <div class="hero-showcase-books">
+                                <!-- Main Book Cover (Python Programming) -->
+                                <div class="hero-book-card-main">
+                                    <img
+                                        src="{{ url_for('static', filename='photos/programming-using-python-from-beginner-to-pro-resized-original-imahybh9jatespgh.jpeg') }}"
+                                        alt="Python Programming Book"
+                                        onerror="this.src='{{ url_for('static', filename='photos/wings-of-fire.jpg') }}'">
+                                </div>
+
+                                <!-- Secondary Book Cover (Ponniyin Selvan) -->
+                                <div class="hero-book-card-sub">
+                                    <img
+                                        src="{{ url_for('static', filename='photos/பொன்னியின்-செல்வன்.webp') }}"
+                                        alt="Ponniyin Selvan Classic"
+                                        onerror="this.src='{{ url_for('static', filename='photos/wings-of-fire.jpg') }}'">
+                                </div>
+                            </div>
+
+                            <!-- Rating Pill -->
+                            <div class="hero-float-pill">
+                                ⭐ 4.9 Rating <span>• 10,000+ Readers</span>
+                            </div>
+                        </div>
+
+                        <h4 class="fw-bold mt-4">
+                            Your next story is waiting.
+                        </h4>
+                        <p class="text-muted">
+                            Read • Explore • Discover
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- =====================================================
+         FEATURES SECTION
+    ===================================================== -->
+    <section class="features-section">
+        <div class="container">
+            <h2 class="section-heading">
+                Why Choose BookStore?
+            </h2>
+            <p class="section-subtitle">
+                Everything you need for your next reading adventure
+            </p>
+
+            <div class="row g-4">
+                <!-- FEATURE 1 -->
+                <div class="col-md-4">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            📚
+                        </div>
+                        <h3 class="feature-title">
+                            Wide Collection
+                        </h3>
+                        <p class="feature-text">
+                            Explore thousands of books across technology, competitive exams, timeless literature, manga and self-growth.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- FEATURE 2 -->
+                <div class="col-md-4">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            💰
+                        </div>
+                        <h3 class="feature-title">
+                            Best Prices & 70% Off
+                        </h3>
+                        <p class="feature-text">
+                            Enjoy incredible savings with up to 70% discount on top bestsellers and student study materials.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- FEATURE 3 -->
+                <div class="col-md-4">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            🚚
+                        </div>
+                        <h3 class="feature-title">
+                            Fast & Easy Ordering
+                        </h3>
+                        <p class="feature-text">
+                            Seamless checkout, address management, and reliable 5-day doorstep delivery with live status tracking.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- =====================================================
+         POPULAR CATEGORIES (ENRICHED WITH REAL IMAGES)
+    ===================================================== -->
+    <section class="books-section">
+        <div class="container">
+            <h2 class="section-heading">
+                Popular Categories
+            </h2>
+            <p class="section-subtitle">
+                Find something perfect for every mood and field of interest
+            </p>
+
+            <div class="row g-4">
+                <!-- 1. PROGRAMMING BOOKS -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="sample-book">
+                        <div class="sample-book-image-box">
+                            <span class="sample-book-badge">Tech</span>
+                            <img
+                                src="{{ url_for('static', filename='photos/programming-using-python-from-beginner-to-pro-resized-original-imahybh9jatespgh.jpeg') }}"
+                                class="sample-book-img"
+                                alt="Programming Books">
+                        </div>
+                        <div class="sample-book-body">
+                            <div>
+                                <div class="sample-book-title">
+                                    Programming & Tech
+                                </div>
+                                <p class="sample-book-author">
+                                    Python • Web Dev • Data Science • SQL
+                                </p>
+                            </div>
+                            <a href="/login" class="sample-price">
+                                Explore Books →
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. ACADEMIC & STUDY BOOKS -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="sample-book">
+                        <div class="sample-book-image-box">
+                            <span class="sample-book-badge">Academic</span>
+                            <img
+                                src="{{ url_for('static', filename='photos/arihant-que-bee-isc-class-11-combo-2026-27-physics-chemistry-original-imahmzhngkwfezak.jpeg') }}"
+                                class="sample-book-img"
+                                alt="Academic Books">
+                        </div>
+                        <div class="sample-book-body">
+                            <div>
+                                <div class="sample-book-title">
+                                    Academic & Exam Prep
+                                </div>
+                                <p class="sample-book-author">
+                                    Study Guides • Class 11-12 • Question Banks
+                                </p>
+                            </div>
+                            <a href="/login" class="sample-price">
+                                Explore Books →
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3. CLASSIC LITERATURE & FICTION -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="sample-book">
+                        <div class="sample-book-image-box">
+                            <span class="sample-book-badge">Classic</span>
+                            <img
+                                src="{{ url_for('static', filename='photos/பொன்னியின்-செல்வன்.webp') }}"
+                                class="sample-book-img"
+                                alt="Classic Literature">
+                        </div>
+                        <div class="sample-book-body">
+                            <div>
+                                <div class="sample-book-title">
+                                    Classic Tamil Literature
+                                </div>
+                                <p class="sample-book-author">
+                                    Historical Epics • Novels • Timeless Stories
+                                </p>
+                            </div>
+                            <a href="/login" class="sample-price">
+                                Explore Books →
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 4. ANIME & MANGA -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="sample-book">
+                        <div class="sample-book-image-box">
+                            <span class="sample-book-badge">Manga</span>
+                            <img
+                                src="{{ url_for('static', filename='photos/95b20f7c-62f3-4639-899b-a07dbd3aa3cc.jpeg') }}"
+                                class="sample-book-img"
+                                alt="Anime and Manga Novels">
+                        </div>
+                        <div class="sample-book-body">
+                            <div>
+                                <div class="sample-book-title">
+                                    Anime & Manga Comics
+                                </div>
+                                <p class="sample-book-author">
+                                    Shonen • Action • Japanese Graphic Novels
+                                </p>
+                            </div>
+                            <a href="/login" class="sample-price">
+                                Explore Books →
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 5. INSPIRING BIOGRAPHIES -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="sample-book">
+                        <div class="sample-book-image-box">
+                            <span class="sample-book-badge">Biography</span>
+                            <img
+                                src="{{ url_for('static', filename='photos/wings-of-fire.jpg') }}"
+                                class="sample-book-img"
+                                alt="Inspiring Biographies">
+                        </div>
+                        <div class="sample-book-body">
+                            <div>
+                                <div class="sample-book-title">
+                                    Inspiring Biographies
+                                </div>
+                                <p class="sample-book-author">
+                                    Dr. A.P.J. Abdul Kalam • Visionary Leaders
+                                </p>
+                            </div>
+                            <a href="/login" class="sample-price">
+                                Explore Books →
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 6. CHILDREN'S MORAL STORIES -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="sample-book">
+                        <div class="sample-book-image-box">
+                            <span class="sample-book-badge">Kids</span>
+                            <img
+                                src="{{ url_for('static', filename='photos/panchatantra-stories.jpg') }}"
+                                class="sample-book-img"
+                                alt="Children Moral Stories">
+                        </div>
+                        <div class="sample-book-body">
+                            <div>
+                                <div class="sample-book-title">
+                                    Children's Moral Stories
+                                </div>
+                                <p class="sample-book-author">
+                                    The Panchatantra • Illustrated Wisdom Tales
+                                </p>
+                            </div>
+                            <a href="/login" class="sample-price">
+                                Explore Books →
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- =====================================================
+         FEATURED BESTSELLERS SECTION
+    ===================================================== -->
+    <section class="bestsellers-section">
+        <div class="container">
+            <h2 class="section-heading">
+                Trending Bestsellers 🔥
+            </h2>
+            <p class="section-subtitle">
+                The most loved books chosen by readers this month
+            </p>
+
+            <div class="row g-4">
+                <!-- BESTSELLER 1 -->
+                <div class="col-lg-3 col-md-6">
+                    <div class="bestseller-card">
+                        <div class="bestseller-img-box">
+                            <span class="bestseller-discount">70% OFF</span>
+                            <img
+                                src="{{ url_for('static', filename='photos/programming-using-python-from-beginner-to-pro-resized-original-imahybh9jatespgh.jpeg') }}"
+                                class="bestseller-img"
+                                alt="Python Programming">
+                        </div>
+                        <div class="bestseller-body">
+                            <div>
+                                <div class="bestseller-name">
+                                    Programming Using Python
+                                </div>
+                                <div class="bestseller-author">
+                                    By Dr. Munish Jindal
+                                </div>
+                                <div class="bestseller-rating">
+                                    ★★★★★ (4.9 / 5.0)
+                                </div>
+                            </div>
+                            <div class="bestseller-price-row">
+                                <div class="bestseller-price">
+                                    ₹599
+                                </div>
+                                <a href="/login" class="bestseller-btn">
+                                    Buy Now
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- BESTSELLER 2 -->
+                <div class="col-lg-3 col-md-6">
+                    <div class="bestseller-card">
+                        <div class="bestseller-img-box">
+                            <span class="bestseller-discount">70% OFF</span>
+                            <img
+                                src="{{ url_for('static', filename='photos/arihant-que-bee-isc-class-11-combo-2026-27-physics-chemistry-original-imahmzhngkwfezak.jpeg') }}"
+                                class="bestseller-img"
+                                alt="Arihant ISC Combo">
+                        </div>
+                        <div class="bestseller-body">
+                            <div>
+                                <div class="bestseller-name">
+                                    Arihant ISC Class 11 Combo
+                                </div>
+                                <div class="bestseller-author">
+                                    By Arihant Editorial
+                                </div>
+                                <div class="bestseller-rating">
+                                    ★★★★★ (4.8 / 5.0)
+                                </div>
+                            </div>
+                            <div class="bestseller-price-row">
+                                <div class="bestseller-price">
+                                    ₹899
+                                </div>
+                                <a href="/login" class="bestseller-btn">
+                                    Buy Now
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- BESTSELLER 3 -->
+                <div class="col-lg-3 col-md-6">
+                    <div class="bestseller-card">
+                        <div class="bestseller-img-box">
+                            <span class="bestseller-discount">70% OFF</span>
+                            <img
+                                src="{{ url_for('static', filename='photos/பொன்னியின்-செல்வன்.webp') }}"
+                                class="bestseller-img"
+                                alt="Ponniyin Selvan">
+                        </div>
+                        <div class="bestseller-body">
+                            <div>
+                                <div class="bestseller-name">
+                                    Ponniyin Selvan (5 Vols)
+                                </div>
+                                <div class="bestseller-author">
+                                    By Kalki Krishnamurthy
+                                </div>
+                                <div class="bestseller-rating">
+                                    ★★★★★ (5.0 / 5.0)
+                                </div>
+                            </div>
+                            <div class="bestseller-price-row">
+                                <div class="bestseller-price">
+                                    ₹750
+                                </div>
+                                <a href="/login" class="bestseller-btn">
+                                    Buy Now
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- BESTSELLER 4 -->
+                <div class="col-lg-3 col-md-6">
+                    <div class="bestseller-card">
+                        <div class="bestseller-img-box">
+                            <span class="bestseller-discount">70% OFF</span>
+                            <img
+                                src="{{ url_for('static', filename='photos/wings-of-fire.jpg') }}"
+                                class="bestseller-img"
+                                alt="Wings of Fire">
+                        </div>
+                        <div class="bestseller-body">
+                            <div>
+                                <div class="bestseller-name">
+                                    Wings of Fire
+                                </div>
+                                <div class="bestseller-author">
+                                    By Dr. A.P.J. Abdul Kalam
+                                </div>
+                                <div class="bestseller-rating">
+                                    ★★★★★ (5.0 / 5.0)
+                                </div>
+                            </div>
+                            <div class="bestseller-price-row">
+                                <div class="bestseller-price">
+                                    ₹399
+                                </div>
+                                <a href="/login" class="bestseller-btn">
+                                    Buy Now
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- =====================================================
+         SPOTLIGHT SECTION: ANIME & GRAPHIC NOVELS
+    ===================================================== -->
+    <section class="spotlight-section">
+        <div class="container">
+            <div class="spotlight-card">
+                <div class="row align-items-center g-0">
+                    <div class="col-lg-7">
+                        <div class="spotlight-content">
+                            <span class="spotlight-pill">
+                                ⚔️ Manga & Graphic Novels
+                            </span>
+                            <h2 class="spotlight-title">
+                                Epic Adventures & Iconic Manga Stories
+                            </h2>
+                            <p class="spotlight-text">
+                                Immerse yourself in the world of heroic sagas and master swordsmen.
+                                From legendary One Piece battles to thrilling fantasy worlds, explore our dedicated manga and graphic novel section at unbeatable prices.
+                            </p>
+                            <a href="/login" class="shop-btn">
+                                Explore Manga Collection →
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-lg-5">
+                        <div class="spotlight-image-box">
+                            <img
+                                src="{{ url_for('static', filename='photos/95b20f7c-62f3-4639-899b-a07dbd3aa3cc.jpeg') }}"
+                                class="spotlight-img"
+                                alt="One Piece Roronoa Zoro Manga">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- =====================================================
+         OFFER SECTION (WITH GALLERY OF BOOK COVERS)
+    ===================================================== -->
+    <section class="offer-section">
+        <div class="container">
+            <h2 class="offer-title">
+                Your Next Great Read Is Here 📖
+            </h2>
+            <p class="offer-text">
+                Create your free account today and unlock flat 70% off with exclusive reader recommendations and express 5-day delivery.
+            </p>
+
+            <!-- Book Cover Preview Strip -->
+            <div class="offer-covers-strip">
+                <img src="{{ url_for('static', filename='photos/programming-using-python-from-beginner-to-pro-resized-original-imahybh9jatespgh.jpeg') }}" class="offer-cover-thumb" alt="Python">
+                <img src="{{ url_for('static', filename='photos/பொன்னியின்-செல்வன்.webp') }}" class="offer-cover-thumb" alt="Ponniyin Selvan">
+                <img src="{{ url_for('static', filename='photos/arihant-que-bee-isc-class-11-combo-2026-27-physics-chemistry-original-imahmzhngkwfezak.jpeg') }}" class="offer-cover-thumb" alt="Arihant">
+                <img src="{{ url_for('static', filename='photos/95b20f7c-62f3-4639-899b-a07dbd3aa3cc.jpeg') }}" class="offer-cover-thumb" alt="Zoro">
+                <img src="{{ url_for('static', filename='photos/wings-of-fire.jpg') }}" class="offer-cover-thumb" alt="Wings of Fire">
+                <img src="{{ url_for('static', filename='photos/panchatantra-stories.jpg') }}" class="offer-cover-thumb" alt="Panchatantra">
+            </div>
+
+            <a href="/register" class="shop-btn">
+                Join BookStore Today
+            </a>
+        </div>
+    </section>
+
+    <!-- =====================================================
+         FOOTER
+    ===================================================== -->
+    <footer class="landing-footer">
+        <div class="container">
+            <div class="row g-4">
+                <!-- ABOUT -->
+                <div class="col-md-6">
+                    <h5 class="footer-heading">
+                        📚 BookStore
+                    </h5>
+                    <p>
+                        A place for every kind of reader.
+                        Discover anime and manga, classic Tamil literature, English stories,
+                        children's moral books, academic question banks and inspiring biographies.
+                    </p>
+                </div>
+
+                <!-- QUICK LINKS -->
+                <div class="col-md-3">
+                    <h5 class="footer-heading">
+                        Quick Links
+                    </h5>
+                    <p><a href="/">Home</a></p>
+                    <p><a href="/login">Login</a></p>
+                    <p><a href="/register">Register</a></p>
+                </div>
+
+                <!-- CONTACT -->
+                <div class="col-md-3">
+                    <h5 class="footer-heading">
+                        Contact
+                    </h5>
+                    <p>📧 bookstore@example.com</p>
+                    <p>📞 +91 98765 43210</p>
+                    <p>📍 Chennai, Tamil Nadu, India</p>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                © 2026 BookStore. All Rights Reserved.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap Bundle JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>

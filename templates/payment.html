@@ -1,0 +1,1528 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Payment Successful - BookStore</title>
+
+    <!-- Bootstrap -->
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet">
+
+    <!-- Common CSS -->
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}">
+
+    <style>
+
+        /* =========================
+           BODY
+        ========================== */
+
+        body {
+            background: #eefaff;
+            color: #111;
+            font-family: "Poppins", sans-serif;
+            overflow-x: hidden;
+        }
+
+
+        /* =========================
+           NAVBAR
+        ========================== */
+
+        .store-navbar {
+            background: #111;
+            padding: 14px 0;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.18);
+        }
+
+        .store-brand {
+            color: white;
+            font-size: 25px;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .store-brand:hover {
+            color: #ffe4b5;
+        }
+
+        .nav-link-custom {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+            font-weight: 500;
+            transition: 0.3s;
+        }
+
+        .nav-link-custom:hover {
+            color: #ffe4b5;
+        }
+
+
+        /* =========================
+           SKY TOP AREA
+        ========================== */
+
+        .sky-area {
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(
+                180deg,
+                #bdeeff,
+                #eefaff
+            );
+            padding: 35px 0 20px;
+        }
+
+        .sky-title {
+            text-align: center;
+            color: #172337;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .sky-subtitle {
+            text-align: center;
+            color: #555;
+            margin-bottom: 0;
+        }
+
+
+        /* =========================
+           PAGE
+        ========================== */
+
+        .payment-wrapper {
+            padding: 35px 0 70px;
+        }
+
+
+        /* =========================
+           MAIN CARD
+        ========================== */
+
+        .confirmation-card {
+            background: white;
+            border-radius: 18px;
+            padding: 35px;
+
+            box-shadow:
+                0 8px 30px rgba(0,0,0,0.10);
+
+            border: 1px solid #dceff7;
+        }
+
+
+        /* =========================
+           SUCCESS ICON
+        ========================== */
+
+        .success-icon {
+            width: 90px;
+            height: 90px;
+
+            background: #d9f7e5;
+            color: #198754;
+
+            border-radius: 50%;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 45px;
+
+            margin: 0 auto 20px;
+
+            font-weight: bold;
+
+            border: 5px solid #eefaff;
+        }
+
+
+        /* =========================
+           TITLE
+        ========================== */
+
+        .order-title {
+            font-weight: 700;
+            color: #172337;
+        }
+
+        .page-subtitle {
+            color: #777;
+        }
+
+
+        /* =========================
+           PRODUCT CARD
+        ========================== */
+
+        .product-card {
+            background: #f5fcff;
+            border-radius: 14px;
+            padding: 20px;
+            border: 1px solid #dceff7;
+        }
+
+        .product-image {
+            width: 120px;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 10px;
+            background: #eaf8ff;
+            border: 1px solid #d9edf5;
+        }
+
+        .product-name {
+            font-size: 22px;
+            font-weight: 700;
+            color: #172337;
+        }
+
+        .author {
+            color: #777;
+        }
+
+
+        /* =========================
+           OFFER
+        ========================== */
+
+        .offer-badge {
+            display: inline-block;
+
+            background: #e75480;
+            color: white;
+
+            padding: 7px 14px;
+
+            border-radius: 20px;
+
+            font-size: 13px;
+            font-weight: bold;
+
+            margin-top: 8px;
+        }
+
+        .original-price {
+            color: #888;
+
+            text-decoration: line-through;
+
+            font-size: 15px;
+
+            margin-top: 12px;
+        }
+
+        .discount {
+            color: #198754;
+
+            font-size: 14px;
+
+            font-weight: bold;
+
+            margin-top: 5px;
+        }
+
+        .final-price {
+            color: #e65100;
+
+            font-size: 28px;
+
+            font-weight: bold;
+
+            margin-top: 3px;
+        }
+
+
+        /* =========================
+           INFORMATION BOX
+        ========================== */
+
+        .info-box {
+            background: #f5fcff;
+
+            border-radius: 12px;
+
+            padding: 18px;
+
+            margin-top: 15px;
+
+            border: 1px solid #dceff7;
+        }
+
+        .info-label {
+            color: #777;
+
+            font-size: 13px;
+
+            margin-bottom: 5px;
+        }
+
+        .info-value {
+            font-weight: 600;
+
+            color: #222;
+        }
+
+
+        /* =========================
+           STATUS
+        ========================== */
+
+        .status-badge {
+            display: inline-block;
+
+            padding: 7px 15px;
+
+            border-radius: 20px;
+
+            font-size: 13px;
+
+            font-weight: bold;
+        }
+
+        .pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .paid {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .cancelled {
+            background: #f8d7da;
+            color: #842029;
+        }
+
+
+        /* =========================
+           SUMMARY
+        ========================== */
+
+        .summary-box {
+            background: #fff8ef;
+
+            border: 1px solid #ffd8a8;
+
+            border-radius: 14px;
+
+            padding: 20px;
+
+            margin-top: 25px;
+        }
+
+        .summary-row {
+            display: flex;
+
+            justify-content: space-between;
+
+            padding: 8px 0;
+
+            color: #555;
+        }
+
+        .summary-discount {
+            color: #198754;
+
+            font-weight: 600;
+        }
+
+        .summary-total {
+            display: flex;
+
+            justify-content: space-between;
+
+            border-top: 1px solid #ddd;
+
+            padding-top: 15px;
+
+            margin-top: 8px;
+
+            font-size: 22px;
+
+            font-weight: bold;
+
+            color: #172337;
+        }
+
+        .summary-total-price {
+            color: #e65100;
+        }
+
+
+        /* =========================
+           SAVING BOX
+        ========================== */
+
+        .saving-box {
+            background: #e8f8ee;
+
+            border: 1px solid #b7ebc6;
+
+            border-radius: 12px;
+
+            padding: 15px;
+
+            margin-top: 15px;
+
+            color: #146c43;
+
+            font-weight: 600;
+        }
+
+
+        /* =========================
+           SUCCESS MESSAGE
+        ========================== */
+
+        .success-message {
+            background: #eefaff;
+
+            border: 1px solid #b9e8f7;
+
+            color: #155b72;
+
+            border-radius: 12px;
+
+            padding: 18px;
+
+            margin-top: 25px;
+        }
+
+
+        /* =========================
+           BUTTONS
+        ========================== */
+
+        .action-btn {
+            background: #111;
+
+            color: white;
+
+            border: none;
+
+            padding: 12px 25px;
+
+            border-radius: 8px;
+
+            font-weight: bold;
+
+            text-decoration: none;
+
+            display: inline-block;
+
+            transition: 0.3s;
+        }
+
+        .action-btn:hover {
+            background: #333;
+
+            color: white;
+        }
+
+        .secondary-btn {
+            background: white;
+
+            color: #333;
+
+            border: 1px solid #ddd;
+
+            padding: 11px 25px;
+
+            border-radius: 8px;
+
+            font-weight: 600;
+
+            text-decoration: none;
+
+            display: inline-block;
+
+            transition: 0.3s;
+        }
+
+        .secondary-btn:hover {
+            background: #ffe4b5;
+
+            color: #222;
+
+            border-color: #ffe4b5;
+        }
+
+
+        /* =========================
+           DIVIDER
+        ========================== */
+
+        hr {
+            border-color: #dceff7;
+            opacity: 1;
+        }
+
+
+        /* =========================
+           FOOTER
+        ========================== */
+
+        .footer {
+            background: #222;
+
+            color: white;
+
+            padding: 35px 20px;
+
+            text-align: center;
+        }
+
+        .footer p {
+            color: #aaa;
+
+            margin: 0;
+        }
+
+        .footer .footer-brand {
+            color: white;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+
+        /* =========================
+           MOBILE
+        ========================== */
+
+        @media (max-width: 768px) {
+
+            .confirmation-card {
+                padding: 22px;
+            }
+
+            .nav-link-custom {
+                margin-left: 8px;
+                font-size: 14px;
+            }
+
+            .product-image {
+                width: 100%;
+                height: 260px;
+            }
+
+            .action-btn,
+            .secondary-btn {
+                width: 100%;
+                margin-bottom: 10px;
+            }
+
+            .product-name {
+                font-size: 19px;
+            }
+
+            .final-price {
+                font-size: 24px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     NAVBAR
+====================================================== -->
+
+<nav class="store-navbar">
+
+    <div class="container">
+
+        <div class="d-flex
+                    justify-content-between
+                    align-items-center
+                    flex-wrap">
+
+
+            <!-- BRAND -->
+
+            <a
+                href="/home"
+                class="store-brand">
+
+                📚 BookStore
+
+            </a>
+
+
+            <!-- LINKS -->
+
+            <div>
+
+                <a
+                    href="/home"
+                    class="nav-link-custom">
+
+                    🏠 Home
+
+                </a>
+
+
+                <a
+                    href="/productoverview"
+                    class="nav-link-custom">
+
+                    ❤️ My Likes
+
+                </a>
+
+
+                <a
+                    href="/orderpage"
+                    class="nav-link-custom">
+
+                    📦 My Orders
+
+                </a>
+
+
+                <a
+                    href="/logout"
+                    class="nav-link-custom">
+
+                    🚪 Logout
+
+                </a>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</nav>
+
+
+
+<!-- =====================================================
+     SKY HEADER
+====================================================== -->
+
+<section class="sky-area">
+
+    <div class="container">
+
+        <h5 class="sky-title">
+            📚 BookStore
+        </h5>
+
+        <p class="sky-subtitle">
+            Your order is on its way to you!
+        </p>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     PAYMENT PAGE
+====================================================== -->
+
+<div class="container payment-wrapper">
+
+
+    <div class="row justify-content-center">
+
+
+        <div class="col-lg-9">
+
+
+            <div class="confirmation-card">
+
+
+                <!-- =================================================
+                     SUCCESS
+                ================================================== -->
+
+                <div class="text-center">
+
+
+                    <div class="success-icon">
+
+                        ✓
+
+                    </div>
+
+
+                    <h2 class="order-title">
+
+                        Order Placed Successfully!
+
+                    </h2>
+
+
+                    <p class="page-subtitle">
+
+                        Thank you for shopping with BookStore.
+
+                    </p>
+
+
+                </div>
+
+
+
+                <hr class="my-4">
+
+
+
+                <!-- =================================================
+                     PRODUCT
+                ================================================== -->
+
+                <h4 class="order-title mb-3">
+
+                    📚 Ordered Book
+
+                </h4>
+
+
+                <div class="product-card">
+
+
+                    <div class="row align-items-center">
+
+
+                        <!-- IMAGE -->
+
+                        <div class="col-md-3 text-center mb-3 mb-md-0">
+
+
+                            {% if book.image_name %}
+
+
+                            <img
+                                src="{{ url_for(
+                                    'static',
+                                    filename='photos/' + book.image_name
+                                ) }}"
+                                class="product-image"
+                                alt="{{ book.book_name }}">
+
+
+                            {% else %}
+
+
+                            <div
+                                class="product-image
+                                       d-flex
+                                       align-items-center
+                                       justify-content-center
+                                       bg-secondary
+                                       text-white
+                                       mx-auto">
+
+                                📖
+
+                            </div>
+
+
+                            {% endif %}
+
+
+                        </div>
+
+
+
+                        <!-- DETAILS -->
+
+                        <div class="col-md-9">
+
+
+                            <div class="product-name">
+
+                                {{ book.book_name }}
+
+                            </div>
+
+
+                            <p class="author mb-2">
+
+                                ✍️ Author:
+                                {{ book.author }}
+
+                            </p>
+
+
+                            <!-- 70% OFFER -->
+
+                            <span class="offer-badge">
+
+                                🔥 70% OFF
+
+                            </span>
+
+
+                            <!-- ORIGINAL PRICE -->
+
+                            <div class="original-price">
+
+                                Original Price:
+
+                                ₹<span id="originalPrice">
+                                    {{ book.price }}
+                                </span>
+
+                            </div>
+
+
+                            <!-- FINAL PRICE -->
+
+                            <div class="final-price">
+
+                                ₹<span id="discountedPrice">
+                                    0.00
+                                </span>
+
+                            </div>
+
+
+                            <div class="discount">
+
+                                🎉 You saved 70% on this book!
+
+                            </div>
+
+
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- =================================================
+                     ORDER INFORMATION
+                ================================================== -->
+
+                <h4 class="order-title mt-4 mb-3">
+
+                    📦 Order Information
+
+                </h4>
+
+
+                <div class="row">
+
+
+                    <!-- PAYMENT METHOD -->
+
+                    <div class="col-md-6">
+
+                        <div class="info-box">
+
+                            <div class="info-label">
+
+                                Payment Method
+
+                            </div>
+
+
+                            <div class="info-value">
+
+                                {% if payment.payment_method == "UPI" %}
+
+                                    📱 UPI
+
+                                {% elif payment.payment_method == "GPay" %}
+
+                                    🟢 Google Pay
+
+                                {% elif payment.payment_method == "COD" %}
+
+                                    💵 Cash on Delivery
+
+                                {% elif payment.payment_method == "Cash on Delivery" %}
+
+                                    💵 Cash on Delivery
+
+                                {% else %}
+
+                                    {{ payment.payment_method }}
+
+                                {% endif %}
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- QUANTITY -->
+
+                    <div class="col-md-6">
+
+                        <div class="info-box">
+
+                            <div class="info-label">
+
+                                Quantity
+
+                            </div>
+
+                            <div class="info-value">
+
+                                {{ payment.quantity }}
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- ORIGINAL PRICE -->
+
+                    <div class="col-md-6">
+
+                        <div class="info-box">
+
+                            <div class="info-label">
+
+                                Original Price
+
+                            </div>
+
+                            <div class="info-value">
+
+                                ₹{{ book.price }}
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- OFFER -->
+
+                    <div class="col-md-6">
+
+                        <div class="info-box">
+
+                            <div class="info-label">
+
+                                Special Offer
+
+                            </div>
+
+                            <div class="info-value text-success">
+
+                                🔥 70% OFF
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- SAVING -->
+
+                    <div class="col-md-6">
+
+                        <div class="info-box">
+
+                            <div class="info-label">
+
+                                You Saved
+
+                            </div>
+
+                            <div class="info-value text-success">
+
+                                ₹<span id="savedAmount">
+                                    0.00
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- TOTAL -->
+
+                    <div class="col-md-6">
+
+                        <div class="info-box">
+
+                            <div class="info-label">
+
+                                Total Amount
+
+                            </div>
+
+                            <div class="info-value final-price">
+
+                                ₹<span id="totalAmount">
+                                    0.00
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- ORDER STATUS -->
+
+                    <div class="col-md-6">
+
+                        <div class="info-box">
+
+                            <div class="info-label">
+
+                                Order Status
+
+                            </div>
+
+                            <div class="info-value mt-1">
+
+
+                                {% if payment.payment_status == "Paid" %}
+
+                                    <span class="status-badge paid">
+
+                                        ✓ Paid
+
+                                    </span>
+
+                                {% elif payment.payment_status == "Cancelled" %}
+
+                                    <span class="status-badge cancelled">
+
+                                        ✕ Cancelled
+
+                                    </span>
+
+                                {% else %}
+
+                                    <span class="status-badge pending">
+
+                                        ⏳ Pending
+
+                                    </span>
+
+                                {% endif %}
+
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- DELIVERY -->
+
+                    <div class="col-md-6">
+
+                        <div class="info-box">
+
+                            <div class="info-label">
+
+                                Expected Delivery
+
+                            </div>
+
+                            <div class="info-value">
+
+                                {% if payment.delivery_date %}
+
+                                    📅 {{ payment.delivery_date }}
+
+                                {% else %}
+
+                                    Will be updated soon
+
+                                {% endif %}
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- ORDER DATE -->
+
+                    <div class="col-md-6">
+
+                        <div class="info-box">
+
+                            <div class="info-label">
+
+                                Order Date
+
+                            </div>
+
+                            <div class="info-value">
+
+                                {{ payment.created_at }}
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- ORDER ID -->
+
+                    {% if payment.order_id %}
+
+                    <div class="col-md-6">
+
+                        <div class="info-box">
+
+                            <div class="info-label">
+
+                                Order ID
+
+                            </div>
+
+                            <div class="info-value">
+
+                                #{{ payment.order_id }}
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    {% endif %}
+
+
+                </div>
+
+
+
+                <!-- =================================================
+                     PRICE SUMMARY
+                ================================================== -->
+
+                <div class="summary-box">
+
+
+                    <h5 class="order-title mb-3">
+
+                        🧾 Price Summary
+
+                    </h5>
+
+
+                    <div class="summary-row">
+
+                        <span>
+                            Original Price
+                        </span>
+
+                        <span>
+
+                            ₹<span id="summaryOriginal">
+                                0.00
+                            </span>
+
+                        </span>
+
+                    </div>
+
+
+                    <div class="summary-row">
+
+                        <span>
+                            Quantity
+                        </span>
+
+                        <span>
+                            {{ payment.quantity }}
+                        </span>
+
+                    </div>
+
+
+                    <div class="summary-row summary-discount">
+
+                        <span>
+                            Discount
+                        </span>
+
+                        <span>
+                            70% OFF
+                        </span>
+
+                    </div>
+
+
+                    <div class="summary-row summary-discount">
+
+                        <span>
+                            You Save
+                        </span>
+
+                        <span>
+
+                            ₹<span id="summarySaving">
+                                0.00
+                            </span>
+
+                        </span>
+
+                    </div>
+
+
+                    <div class="summary-row">
+
+                        <span>
+                            Delivery
+                        </span>
+
+                        <span class="text-success fw-bold">
+                            FREE
+                        </span>
+
+                    </div>
+
+
+                    <div class="summary-total">
+
+                        <span>
+                            Total Paid
+                        </span>
+
+                        <span class="summary-total-price">
+
+                            ₹<span id="summaryTotal">
+                                0.00
+                            </span>
+
+                        </span>
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- SAVING MESSAGE -->
+
+                <div class="saving-box text-center">
+
+                    🎉 Congratulations!
+
+                    You saved
+
+                    <strong>
+                        ₹<span id="messageSaving">0.00</span>
+                    </strong>
+
+                    with our
+
+                    <strong>70% OFF</strong>
+
+                    special offer.
+
+                </div>
+
+
+
+                <!-- =================================================
+                     SUCCESS MESSAGE
+                ================================================== -->
+
+                <div class="success-message">
+
+
+                    <strong>
+                        🎉 Thank you!
+                    </strong>
+
+
+                    <br>
+
+
+                    Your order has been successfully placed.
+
+
+                    You received a special
+
+                    <strong>70% discount</strong>
+
+                    on this book.
+
+
+                    <br>
+
+
+                    You can track your order from
+
+                    <strong>My Orders</strong>.
+
+                </div>
+
+
+
+                <!-- =================================================
+                     BUTTONS
+                ================================================== -->
+
+                <div class="text-center mt-4">
+
+
+                    <a
+                        href="/orderpage"
+                        class="action-btn me-2">
+
+                        📦 View My Orders
+
+                    </a>
+
+
+                    <a
+                        href="/home"
+                        class="secondary-btn">
+
+                        🏠 Continue Shopping
+
+                    </a>
+
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+</div>
+
+
+
+<!-- =====================================================
+     FOOTER
+====================================================== -->
+
+<footer class="footer">
+
+    <p class="footer-brand">
+
+        📚 BookStore
+
+    </p>
+
+
+    <p class="mt-2">
+
+        A place for every kind of reader.
+
+    </p>
+
+
+    <p class="mt-2 mb-0">
+
+        © 2026 BookStore. All Rights Reserved.
+
+    </p>
+
+</footer>
+
+
+
+<!-- =====================================================
+     JAVASCRIPT
+     70% DISCOUNT CALCULATION
+====================================================== -->
+
+<script>
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    /* =========================
+       ORIGINAL PRICE
+    ========================== */
+
+    let originalPrice =
+        parseFloat(
+            "{{ book.price }}"
+        ) || 0;
+
+
+    /* =========================
+       QUANTITY
+    ========================== */
+
+    let quantity =
+        parseInt(
+            "{{ payment.quantity }}"
+        ) || 1;
+
+
+    /* =========================
+       70% DISCOUNT
+       CUSTOMER PAYS 30%
+    ========================== */
+
+    let discountPercent = 70;
+
+    let customerPercent = 30;
+
+
+    /* =========================
+       CALCULATE PRICE
+    ========================== */
+
+    let originalTotal =
+        originalPrice * quantity;
+
+
+    let discountAmount =
+        originalTotal *
+        discountPercent / 100;
+
+
+    let finalAmount =
+        originalTotal *
+        customerPercent / 100;
+
+
+    /* =========================
+       FORMAT MONEY
+    ========================== */
+
+    let originalTotalFormatted =
+        originalTotal.toFixed(2);
+
+    let discountAmountFormatted =
+        discountAmount.toFixed(2);
+
+    let finalAmountFormatted =
+        finalAmount.toFixed(2);
+
+
+    /* =========================
+       PRODUCT PRICE
+    ========================== */
+
+    document.getElementById(
+        "discountedPrice"
+    ).innerText =
+        finalAmountFormatted;
+
+
+    /* =========================
+       SAVED AMOUNT
+    ========================== */
+
+    document.getElementById(
+        "savedAmount"
+    ).innerText =
+        discountAmountFormatted;
+
+
+    /* =========================
+       TOTAL AMOUNT
+    ========================== */
+
+    document.getElementById(
+        "totalAmount"
+    ).innerText =
+        finalAmountFormatted;
+
+
+    /* =========================
+       SUMMARY
+    ========================== */
+
+    document.getElementById(
+        "summaryOriginal"
+    ).innerText =
+        originalTotalFormatted;
+
+
+    document.getElementById(
+        "summarySaving"
+    ).innerText =
+        discountAmountFormatted;
+
+
+    document.getElementById(
+        "summaryTotal"
+    ).innerText =
+        finalAmountFormatted;
+
+
+    /* =========================
+       SAVING MESSAGE
+    ========================== */
+
+    document.getElementById(
+        "messageSaving"
+    ).innerText =
+        discountAmountFormatted;
+
+});
+
+</script>
+
+
+<!-- Bootstrap JS -->
+
+<script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
+</script>
+
+
+</body>
+
+</html>
+
